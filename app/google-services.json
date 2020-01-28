@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "120873551649",
+    "firebase_url": "https://ichat-2ec63.firebaseio.com",
+    "project_id": "ichat-2ec63",
+    "storage_bucket": "ichat-2ec63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120873551649:android:ac1202969ea1429586a060",
+        "android_client_info": {
+          "package_name": "com.chatapp.abobakrdev.egychat2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120873551649-4jboenij0iq4idh181vukqoj77n3p4bq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chatapp.abobakrdev.egychat2",
+            "certificate_hash": "4e5701d896d859bb1ad6fe401b12f2b42086d0fe"
+          }
+        },
+        {
+          "client_id": "120873551649-7c4bl6tcoaa1uhlp00hmofb7o81jt8nh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chatapp.abobakrdev.egychat2",
+            "certificate_hash": "c7681f9da991c6197be3956961f66be7f9285cb9"
+          }
+        },
+        {
+          "client_id": "120873551649-5jk8hpoklj6j64fl2kmh2oijfvd0dhjr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1hMipimzCdmx8_yEZm1QKQOkaC6WTyZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120873551649-8283s03tmnp17nf7mh8s7sm7uajf4ove.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
