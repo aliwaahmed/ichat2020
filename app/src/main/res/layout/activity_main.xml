@@ -1,29 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     >
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textSize="20dp"
-        android:text="This is main activity, sign in to move next activity." />
+    <LinearLayout
 
-    <com.google.android.gms.common.SignInButton
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_in_button"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp">
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".MainActivity">
 
-    </com.google.android.gms.common.SignInButton>
 
-</RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/ja"
+            android:gravity="center"
+            android:textColor="@color/appColor"
+            android:textSize="20dp"
+            android:text="LOGO"/>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="@color/dark_blue"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/_name"
+                android:layout_width="match_parent"
+                android:hint="name"
+                android:textSize="14dp"
+                android:textColor="@color/dark_blue"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="@color/dark_blue"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/_email"
+                android:layout_width="match_parent"
+                android:hint="mobile number"
+                android:inputType="number"
+                android:textSize="14dp"
+                android:textColor="@color/dark_blue"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColorHint="@color/dark_blue"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/_password"
+                android:layout_width="match_parent"
+                android:hint="password"
+                android:inputType="textPassword"
+                android:textSize="14dp"
+                android:textColor="@color/dark_blue"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/_login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_background"
+            android:layout_marginTop="10dp"
+            android:text="next"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/ja"
+            android:textAllCaps="false"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Login with"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/appColor"
+            android:fontFamily="@font/ja"
+            android:layout_marginTop="10dp"/>
+
+
+        <com.google.android.gms.common.SignInButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_in_button"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp">
+
+        </com.google.android.gms.common.SignInButton>
+
+    </LinearLayout>
+
+
+
+</ScrollView>
