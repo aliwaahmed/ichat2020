@@ -13,9 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CompleteInfo.Completeinfo"></activity>
+        <activity android:name=".ActiveUser.home"></activity>
         <activity
-            android:name=".ActiveUser.home"
+            android:name=".CompleteInfo.Completeinfo"
             android:label="@string/title_activity_home" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".MainActivity">

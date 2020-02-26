@@ -21,7 +21,7 @@ public class Completeinfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_completeinfo);
+        setContentView(R.layout.calendar_layout);
         addNewUser=new AddNewUser(this);
 
         name=getIntent().getExtras().getString("name");
