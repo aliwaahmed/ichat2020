@@ -1,6 +1,7 @@
 package com.chatapp.abobakrdev.egychat2.AddNewUser;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.firebase.database.DatabaseReference;
@@ -11,9 +12,11 @@ import java.util.ArrayList;
 public class AddNewUser {
 
     private Context context;
+    private SharedPreferences.Editor sharedPreferences ;
 
     public AddNewUser(Context context) {
         this.context = context;
+        sharedPreferences=context.getSharedPreferences("login",Context.MODE_PRIVATE).edit();
     }
 
 
@@ -31,7 +34,6 @@ public class AddNewUser {
 
 
         Log.e("aa",Remove_delemeter(mail));
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("users");
         myRef.child(Remove_delemeter(mail));
@@ -43,6 +45,15 @@ public class AddNewUser {
         refmail.child("name").setValue(name);
         refmail.child("img").setValue(img);
 
+        sharedPreferences.putString("name",name);
+        sharedPreferences.putString("Gmail",mail);
+
+        sharedPreferences.putString("mail",Remove_delemeter(mail));
+        sharedPreferences.putString("age",age);
+        sharedPreferences.putString("gender",gender);
+        sharedPreferences.putString("img",img);
+        sharedPreferences.putString("phone",phone);
+        sharedPreferences.apply();
 
         DatabaseReference subimg = refmail.child("image").getRef();
 
@@ -73,25 +84,30 @@ public class AddNewUser {
         }
         return stringBuilder.toString();
     }
+
     /**
      *
-     * @param id
      * @param mail
+     * @param time
      */
-    public void add_To_active_user(String id,String mail)
+    public void add_To_active_user(String mail,String time)
     {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("active_user");
 
-        myRef.child(id).setValue(id);
+        myRef.child(mail).setValue(time);
 
 
 
     }
 
-    public void remove_active_user(String id)
+    public void remove_active_user(String mail)
     {
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("active_user");
+
+        myRef.child(mail).removeValue();
     }
 }

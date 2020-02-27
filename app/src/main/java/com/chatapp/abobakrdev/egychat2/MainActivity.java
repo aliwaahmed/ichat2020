@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.home;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.CompleteInfo.Completeinfo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -67,52 +70,62 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     TextView textView;
     private static final int RC_SIGN_IN = 1;
     FirebaseAuth mAuth;
-    private AddNewUser addNewUser ;
-    private  GoogleSignInAccount account;
+    private AddNewUser addNewUser;
+    private GoogleSignInAccount account;
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addNewUser=new AddNewUser(this);
-        FirebaseApp.initializeApp(getApplicationContext());
-
-        mAuth = FirebaseAuth.getInstance();
-
-        GoogleSignInOptions gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .requestIdToken("120873551649-8283s03tmnp17nf7mh8s7sm7uajf4ove.apps.googleusercontent.com")
-                .build();
-        googleApiClient=new GoogleApiClient.Builder(this)
-                .enableAutoManage(MainActivity.this,this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
-                .build();
 
 
 
-        signInButton=(SignInButton)findViewById(R.id.sign_in_button);
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
-                startActivityForResult(intent,RC_SIGN_IN);
-            }
-        });
+        sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+
+        String name = sharedPreferences.getString("name", "-1");
+        String mail = sharedPreferences.getString("mail", "-1");
+        String age = sharedPreferences.getString("age", "-1");
+        String gender = sharedPreferences.getString("gender", "-1");
+        String img = sharedPreferences.getString("img", "-1");
+
+        if(!mail.equals("-1"))
+        {
+            Intent intent =new Intent(this, home.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            this.finish();
+        }
+        else {
+
+            addNewUser = new AddNewUser(this);
+            FirebaseApp.initializeApp(getApplicationContext());
+
+            mAuth = FirebaseAuth.getInstance();
+
+            GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                    .requestEmail()
+                    .requestIdToken("120873551649-8283s03tmnp17nf7mh8s7sm7uajf4ove.apps.googleusercontent.com")
+                    .build();
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .enableAutoManage(MainActivity.this, this)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                    .build();
 
 
+            signInButton = (SignInButton) findViewById(R.id.sign_in_button);
+            signInButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                    startActivityForResult(intent, RC_SIGN_IN);
+                }
+            });
 
 
-
-      //  sendVerificationCode("01015124020");
+        }
+        //  sendVerificationCode("01015124020");
     }
-
-
-
-
-
-
-
-
-
 
 
 //    private void sendVerificationCode(String mobile) {
@@ -213,29 +226,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 //
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
         Log.d("TAG", "firebaseAuthWithGoogle:" + acct.getId());
@@ -267,39 +257,36 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==RC_SIGN_IN){
+        if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
     }
-    private void handleSignInResult(GoogleSignInResult result){
+
+    private void handleSignInResult(GoogleSignInResult result) {
         Log.e("result", String.valueOf(result.getStatus()));
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
 
 
-             account=result.getSignInAccount();
-
-
-
-
-
+            account = result.getSignInAccount();
 
 
             gotoProfile();
             firebaseAuthWithGoogle(result.getSignInAccount());
 
 
-        }else{
-            Toast.makeText(getApplicationContext(),"Sign in cancel",Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Sign in cancel", Toast.LENGTH_LONG).show();
         }
     }
-    private void gotoProfile(){
+
+    private void gotoProfile() {
 
 
-        Intent intent=new Intent(MainActivity.this, Completeinfo.class);
-        intent.putExtra("name",account.getDisplayName());
-        intent.putExtra("mail",account.getEmail());
-        intent.putExtra("img",account.getPhotoUrl());
+        Intent intent = new Intent(MainActivity.this, Completeinfo.class);
+        intent.putExtra("name", account.getDisplayName());
+        intent.putExtra("mail", account.getEmail());
+        intent.putExtra("img", account.getPhotoUrl().toString());
         startActivity(intent);
     }
 }

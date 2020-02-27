@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,33 +12,42 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="375dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
         app:cardCornerRadius="10dp"
-        android:layout_height="wrap_content">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
-                android:textColorHint="@color/dark_blue"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                >
+                android:textColorHint="@color/dark_blue">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/_phone"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="Phone number"
-                    android:textSize="14dp"
+                    android:inputType="phone"
                     android:textColor="@color/dark_blue"
-                    android:layout_height="wrap_content"/>
+                    android:textSize="14dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,15 +55,16 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="8"
+                android:orientation="horizontal"
 
-                android:orientation="horizontal">
+                android:weightSum="8">
 
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="1dp"
                     android:fontFamily="@font/ja"
                     android:text="select date"
@@ -70,6 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/appColor"
                     android:src="@drawable/ic_date_range_black_24dp"
@@ -84,29 +95,29 @@
             <RadioGroup
                 android:id="@+id/radioGroup"
                 android:layout_width="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="0dp">
 
                 <RadioButton
                     android:id="@+id/male"
-                    android:fontFamily="@font/ja"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ja"
                     android:text="@string/male" />
 
                 <RadioButton
                     android:id="@+id/Female"
-                    android:fontFamily="@font/ja"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ja"
                     android:text="@string/Female" />
 
                 <RadioButton
                     android:id="@+id/other"
-                    android:fontFamily="@font/ja"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/ja"
                     android:text="@string/other" />
             </RadioGroup>
 
@@ -115,14 +126,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_background"
-                android:text="Confirm"
-                android:fontFamily="@font/ja"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/button_background"
+                android:fontFamily="@font/ja"
+                android:onClick="next"
+                android:text="Confirm"
                 android:textAllCaps="false"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>
-</LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:background="@drawable/gradient"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.chatapp.abobakrdev.egychat2.ActiveUser.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Setting.SettingFragment"
+        android:label="@string/Setting"
+        tools:layout="@layout/myprofile_layout" />
 </navigation>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,24 +15,6 @@
     android:layout_height="match_parent">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/dark_blue"
-        tools:ignore="MissingConstraints">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/ja"
-            android:gravity="center_horizontal"
-            android:text="Name"
-            android:textColor="@color/white" />
-
-    </androidx.appcompat.widget.Toolbar>
-
-
     <FrameLayout
         android:id="@+id/frameLayout2"
         android:layout_width="150dp"
@@ -43,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1"
         tools:ignore="MissingConstraints">
 
@@ -60,12 +42,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1"
         tools:ignore="MissingConstraints" />
 
 
-    <FrameLayout
+    z<FrameLayout
         android:id="@+id/frameLayout3"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -74,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1"
         tools:ignore="MissingConstraints" />
 
@@ -88,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.119"
         tools:ignore="MissingConstraints"/>
 
@@ -97,33 +79,33 @@
         android:id="@+id/_my_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="9dp"
         android:fontFamily="@font/ja"
         android:gravity="center_horizontal"
         android:text="Name"
         android:textColor="@color/gray"
         android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/_mail"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
-        app:layout_constraintVertical_bias="0.006"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
 
 
     <TextView
-        android:id="@+id/_my_statue"
+        android:id="@+id/_mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="45dp"
         android:fontFamily="@font/ja"
         android:gravity="center_horizontal"
-        android:text="statue"
+        android:text="@android:string/defaultVoiceMailAlphaTag"
         android:textColor="@color/gray"
         android:textSize="16dp"
-        android:layout_marginTop="10dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
-        app:layout_constraintVertical_bias="0.098"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/_my_name"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="-16dp" />
 
@@ -131,14 +113,14 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/_my_statue"
-        app:layout_constraintVertical_bias="0.032"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_mail"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -154,13 +136,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ja"
-                android:text="120" />
+                android:text="Date of birth" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/ja"
+                android:gravity="center"
                 android:text="follows" />
         </LinearLayout>
 
@@ -179,13 +163,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ja"
-                android:text="19" />
+                android:text="Gender" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/_gender"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/ja"
+                android:gravity="center"
                 android:text="Collections" />
         </LinearLayout>
 
@@ -204,20 +190,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ja"
-                android:text="57" />
+                android:text="Phone No." />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/_phone"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/ja"
+                android:gravity="center"
                 android:text="Boards" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="300dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.645"
@@ -229,12 +218,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            tools:listitem="@layout/my_profile_recycler"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            tools:listitem="@layout/my_profile_recycler" />
 
     </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</LinearLayout>
