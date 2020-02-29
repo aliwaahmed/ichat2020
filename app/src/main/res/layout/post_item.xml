@@ -76,6 +76,9 @@
     <TextView
         android:id="@+id/_post_txt"
         android:layout_width="match_parent"
+        android:textColor="@color/appColor"
+        android:textSize="16dp"
+        android:fontFamily="@font/ja"
         android:text="ahmedahmedahmedahmedahmedahmedahmedahmed"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
