@@ -1,5 +1,6 @@
 package com.chatapp.abobakrdev.egychat2.ActiveUser;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -56,7 +58,7 @@ public class home extends AppCompatActivity {
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        addNewUser.add_To_active_user(mail,currentTime);
+        addNewUser.add_To_active_user(mail,currentTime,name,img,gender);
     }
 
     @Override
@@ -65,6 +67,8 @@ public class home extends AppCompatActivity {
         addNewUser.remove_active_user(mail);
 
     }
+
+
 
     @Override
     protected void onDestroy() {
@@ -85,5 +89,10 @@ public class home extends AppCompatActivity {
         super.onStop();
         addNewUser.remove_active_user(mail);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
