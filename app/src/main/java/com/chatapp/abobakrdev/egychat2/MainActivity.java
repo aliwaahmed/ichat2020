@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-
         String name = sharedPreferences.getString("name", "-1");
         String mail = sharedPreferences.getString("mail", "-1");
         String age = sharedPreferences.getString("age", "-1");
@@ -288,5 +287,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         intent.putExtra("mail", account.getEmail());
         intent.putExtra("img", account.getPhotoUrl().toString());
         startActivity(intent);
+        this.finish();
     }
 }

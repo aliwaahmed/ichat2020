@@ -112,7 +112,7 @@ public class Completeinfo extends AppCompatActivity {
         else
         {
         addNewUser.add_user(name,mail,radioButton.getText().toString(), date.getText().toString(),
-                Phone.getText().toString(),img,new ArrayList<String>());
+                Phone.getText().toString(),img);
 
 
         Intent intent =new Intent(this, home.class);
