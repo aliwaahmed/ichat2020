@@ -9,6 +9,11 @@
     android:layout_height="wrap_content"
     android:paddingBottom="10dp">
 
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <include layout="@layout/dayiteam"></include>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -23,6 +28,7 @@
             android:layout_marginEnd="8dp"
             android:fontFamily="serif-monospace"
             android:text="2:20 PM"
+            android:textColor="@color/navColor"
             app:layout_constraintEnd_toStartOf="@+id/materialCardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -149,4 +155,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
 </com.google.android.material.card.MaterialCardView>
