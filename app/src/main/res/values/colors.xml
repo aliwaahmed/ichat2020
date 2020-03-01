@@ -37,5 +37,8 @@
 
     <color name="black">#000000</color>
     <color name="green">#7CFC00</color>
+    <color name="iteam1">#FFFAC3</color>
+    <color name="iteam2">#E4F2FD</color>
+    <color name="iteam3">#FFEAED</color>
 
 </resources>
