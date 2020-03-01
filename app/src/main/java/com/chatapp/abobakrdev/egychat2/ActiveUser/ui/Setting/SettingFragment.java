@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -56,7 +58,8 @@ public class SettingFragment extends Fragment {
     private String phone,Gmail;
     private ImageView imageView;
     private TextView gander, date, _phone, _mail,_my_name;
-    private ImageView _add_img,Add0,Add1,_profile_recycler_img0,_profile_recycler_img1;
+    private ImageView _add_img,Add0,Add1,_profile_recycler_img0,_profile_recycler_img1 , edit_statue , close_statue;
+    private LinearLayout update_statue ;
     final private int GET_GALLERY_CODE =111;
     final private int GET_GALLERY_CODE0 =110;
 
@@ -75,7 +78,8 @@ public class SettingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.myprofile_layout, container, false);
+        View root = inflater.inflate(R.layout.my_profile_layout, container, false);
+
         frameLayout=root.findViewById(R.id.frameLayout);
         gander=root.findViewById(R.id._gender);
         date=root.findViewById(R.id._date);
@@ -92,6 +96,10 @@ public class SettingFragment extends Fragment {
         progressDialog.setTitle("Upload New Image");
         progressDialog.setCancelable(false);
         progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+
+        edit_statue = root.findViewById(R.id._edit_statue);
+        update_statue = root.findViewById(R.id._update_statue);
+        close_statue = root.findViewById(R.id._close_statue);
 
 
         sharedPreferences1=getActivity().getSharedPreferences("login", Context.MODE_PRIVATE).edit();
@@ -122,6 +130,25 @@ public class SettingFragment extends Fragment {
 
 
 
+        edit_statue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                update_statue.setVisibility(View.VISIBLE);
+                edit_statue.setVisibility(View.GONE);
+                close_statue.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        close_statue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edit_statue.setVisibility(View.VISIBLE);
+                update_statue.setVisibility(View.GONE);
+                close_statue.setVisibility(View.GONE);
+            }
+        });
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -209,7 +236,6 @@ public class SettingFragment extends Fragment {
                             new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                             2000);
                 }
-
 
             }
         });

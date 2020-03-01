@@ -41,6 +41,8 @@ public class Completeinfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.completeinfo);
+
+
         addNewUser=new AddNewUser(this);
         radioGroup=findViewById(R.id.radioGroup);
         Phone =findViewById(R.id._phone);
