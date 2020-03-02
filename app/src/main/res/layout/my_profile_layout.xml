@@ -21,9 +21,9 @@
             style="@style/Widget.MaterialComponents.CardView"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="4dp"
             android:background="@drawable/layout_bg"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +103,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Date of birth" />
+                                android:text="Date of birth"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/_date"
@@ -125,7 +126,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Gender" />
+                                android:text="Gender"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/_gender"
@@ -146,7 +148,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Phone no." />
+                                android:text="Phone no."
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/_phone"
@@ -168,7 +171,7 @@
                 android:id="@+id/_profile_img"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/avatar"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
                 app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
@@ -184,9 +187,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="350dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="4dp"
             android:background="@drawable/layout_bg"
             android:orientation="horizontal">
 
@@ -308,9 +311,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="4dp"
             android:layout_marginBottom="60dp"
             android:background="@drawable/layout_bg"
             android:orientation="vertical">
