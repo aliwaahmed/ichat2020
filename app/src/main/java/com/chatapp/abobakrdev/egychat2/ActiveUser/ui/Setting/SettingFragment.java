@@ -1,6 +1,7 @@
 package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Setting;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,6 +75,9 @@ public class SettingFragment extends Fragment {
     private SharedPreferences.Editor sharedPreferences1 ;
     private ProgressDialog progressDialog ;
     private FrameLayout frameLayout ;
+    private EditText about;
+    private Button update;
+    private TextView text_about;
 
 
 
@@ -78,7 +85,7 @@ public class SettingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.my_profile_layout, container, false);
+        final View root = inflater.inflate(R.layout.my_profile_layout, container, false);
 
         frameLayout=root.findViewById(R.id.frameLayout);
         gander=root.findViewById(R.id._gender);
@@ -87,6 +94,9 @@ public class SettingFragment extends Fragment {
         _mail=root.findViewById(R.id._mail);
         _my_name=root.findViewById(R.id._my_name);
         _add_img =root.findViewById(R.id._edit_img);
+        about =root.findViewById(R.id.about);
+        update =root.findViewById(R.id.update);
+        text_about=root.findViewById(R.id.text_about);
         _profile_recycler_img0=root.findViewById(R.id._profile_recycler_img0);
         _profile_recycler_img1=root.findViewById(R.id._profile_recycler_img1);
         Add0 =root.findViewById(R.id.Add0);
@@ -121,6 +131,7 @@ public class SettingFragment extends Fragment {
         gander.setText(gender);
         _phone.setText(phone);
         _mail.setText(Gmail);
+        text_about.setText(sharedPreferences.getString("about","Enter Data About U "));
 
         Glide.with(getActivity()).load(img).into(imageView);
         Glide.with(getActivity()).load(sharedPreferences.getString("img0","-1")).into(_profile_recycler_img0);
@@ -138,6 +149,8 @@ public class SettingFragment extends Fragment {
                 edit_statue.setVisibility(View.GONE);
                 close_statue.setVisibility(View.VISIBLE);
 
+
+
             }
         });
 
@@ -147,9 +160,37 @@ public class SettingFragment extends Fragment {
                 edit_statue.setVisibility(View.VISIBLE);
                 update_statue.setVisibility(View.GONE);
                 close_statue.setVisibility(View.GONE);
+
             }
         });
 
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!about.getText().toString().isEmpty())
+                {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(root.getWindowToken(), 0);
+                    addNewUser.update_about_me( mail ,about.getText().toString());
+                    edit_statue.setVisibility(View.VISIBLE);
+                    update_statue.setVisibility(View.GONE);
+                    close_statue.setVisibility(View.GONE);
+                    text_about.setText(about.getText().toString());
+                    Snackbar.make(root,"About is updated",Snackbar.LENGTH_LONG).show();
+                    sharedPreferences1.putString("about",about.getText().toString());
+                    sharedPreferences1.apply();
+                    about.setText("");
+
+
+                }
+                else
+                {
+                    about.setError("Enter new About ");
+                }
+
+
+            }
+        });
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -415,7 +456,7 @@ public class SettingFragment extends Fragment {
                                 // uri is your download path
                                 Log.e("path",uri.toString());
                                 addNewUser.add_img(String.valueOf(uri),sharedPreferences.getString("mail","-1"),img0);
-                                sharedPreferences1.putString(img0,uri1.toString());
+                                sharedPreferences1.putString(img0,uri.toString());
                                 sharedPreferences1.apply();
                                 progressDialog.dismiss();
 

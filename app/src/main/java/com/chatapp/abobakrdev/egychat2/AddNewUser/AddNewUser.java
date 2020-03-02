@@ -43,6 +43,7 @@ public class AddNewUser {
         refmail.child("phone").setValue(phone);
         refmail.child("name").setValue(name);
         refmail.child("img").setValue(img);
+        refmail.child("about").setValue("");
 
         sharedPreferences.putString("name", name);
         sharedPreferences.putString("Gmail", mail);
@@ -109,11 +110,30 @@ public class AddNewUser {
 
     }
 
+    /**
+     *
+     * @param mail
+     */
     public void remove_active_user(String mail) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("active_user");
 
         myRef.child(mail).removeValue();
+    }
+
+    /**
+     *
+     * @param mail
+     * @param data
+     */
+    public void update_about_me(String mail,String data)
+    {
+        DatabaseReference myRef = database.getReference("users");
+        myRef.child(Remove_delemeter(mail));
+        DatabaseReference refmail = myRef.child(Remove_delemeter(mail)).getRef();
+
+        refmail.child("about").setValue(data);
+
     }
 }
