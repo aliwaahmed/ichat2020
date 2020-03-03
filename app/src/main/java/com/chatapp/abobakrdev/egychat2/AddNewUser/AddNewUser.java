@@ -151,7 +151,8 @@ public class AddNewUser {
     public void add_post(String name ,String mail ,String color,String day,String date,String ref)
     {
 
-        DatabaseReference myRef = database.getReference("TimeLine").child(ref).child(getRandomString(10));
+        DatabaseReference myRef = database.getReference("TimeLine").child(ref).push();
+
 
         myRef.child("name").setValue(name);
         myRef.child("mail").setValue(mail);
