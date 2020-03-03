@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AddNewUser {
 
@@ -37,7 +38,7 @@ public class AddNewUser {
         DatabaseReference myRef = database.getReference("users");
         myRef.child(Remove_delemeter(mail));
         DatabaseReference refmail = myRef.child(Remove_delemeter(mail)).getRef();
-        refmail.child("email").setValue(name);
+        refmail.child("email").setValue(mail);
         refmail.child("age").setValue(age);
         refmail.child("gender").setValue(gender);
         refmail.child("phone").setValue(phone);
@@ -135,5 +136,40 @@ public class AddNewUser {
 
         refmail.child("about").setValue(data);
 
+    }
+
+    /**
+     *
+     * @param name
+     * @param mail
+     * @param color
+     * @param day
+     * @param date
+     * @param ref
+     */
+
+    public void add_post(String name ,String mail ,String color,String day,String date,String ref)
+    {
+
+        DatabaseReference myRef = database.getReference("TimeLine").child(ref).child(getRandomString(10));
+
+        myRef.child("name").setValue(name);
+        myRef.child("mail").setValue(mail);
+        myRef.child("color").setValue(color);
+        myRef.child("day").setValue(day);
+        myRef.child("date").setValue(date);
+        myRef.child("ref").setValue(ref);
+
+
+    }
+    private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
+
+    private static String getRandomString(final int sizeOfRandomString)
+    {
+        final Random random=new Random();
+        final StringBuilder sb=new StringBuilder(sizeOfRandomString);
+        for(int i=0;i<sizeOfRandomString;++i)
+            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
+        return sb.toString();
     }
 }

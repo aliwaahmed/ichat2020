@@ -3,6 +3,7 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.R;
@@ -40,6 +41,7 @@ public class home extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        mAdView.setVisibility(View.GONE);
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
 
         addNewUser=new AddNewUser(this);
