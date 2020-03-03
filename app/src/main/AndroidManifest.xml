@@ -15,14 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CompleteInfo.Completeinfo"></activity>
+        <activity android:name=".Chat_Activity"></activity>
+        <activity android:name=".Splash_Activity" />
+        <activity android:name=".CompleteInfo.Completeinfo" />
         <activity android:name=".ActiveUser.ui.Setting.Viewimage" />
         <activity android:name=".ActiveUser.home" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_home" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".Splash_Activity">
+        <activity android:name=".Visit_profile_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

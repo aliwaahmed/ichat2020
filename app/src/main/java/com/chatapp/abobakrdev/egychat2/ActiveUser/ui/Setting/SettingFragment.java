@@ -74,7 +74,6 @@ public class SettingFragment extends Fragment {
     private AddNewUser addNewUser;
     private SharedPreferences.Editor sharedPreferences1;
     private ProgressDialog progressDialog;
-    private FrameLayout frameLayout;
     private EditText about;
     private Button update;
     private TextView text_about;
@@ -85,7 +84,6 @@ public class SettingFragment extends Fragment {
 
         final View root = inflater.inflate(R.layout.my_profile_layout, container, false);
 
-        frameLayout = root.findViewById(R.id.frameLayout);
         gander = root.findViewById(R.id._gender);
         date = root.findViewById(R.id._date);
         _phone = root.findViewById(R.id._phone);

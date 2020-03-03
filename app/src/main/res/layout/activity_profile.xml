@@ -40,7 +40,8 @@
                 android:text="name"
                 android:textSize="20dp"
                 tools:layout_editor_absoluteX="166dp"
-                tools:layout_editor_absoluteY="241dp" />
+                tools:layout_editor_absoluteY="241dp"
+                tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/email"
@@ -49,7 +50,8 @@
                 android:text="email"
                 android:textSize="20dp"
                 tools:layout_editor_absoluteX="225dp"
-                tools:layout_editor_absoluteY="325dp" />
+                tools:layout_editor_absoluteY="325dp"
+                tools:ignore="MissingConstraints" />
 
             <TextView
                 android:id="@+id/userId"
@@ -58,7 +60,8 @@
                 android:text="id"
                 android:textSize="20dp"
                 tools:layout_editor_absoluteX="81dp"
-                tools:layout_editor_absoluteY="194dp" />
+                tools:layout_editor_absoluteY="194dp"
+                tools:ignore="MissingConstraints" />
 
             <Button
                 android:id="@+id/logoutBtn"
@@ -66,7 +69,8 @@
                 android:layout_height="wrap_content"
                 android:text="Logout"
                 tools:layout_editor_absoluteX="70dp"
-                tools:layout_editor_absoluteY="384dp" />
+                tools:layout_editor_absoluteY="384dp"
+                tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

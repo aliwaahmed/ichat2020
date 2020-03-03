@@ -11,6 +11,7 @@
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="extended_fab_content_desc">a</string>
     <string name="extended_fab_label">a</string>
+    <string name="timeline">Timeline</string>
 
 
     <string-array name="day">

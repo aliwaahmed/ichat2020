@@ -199,11 +199,9 @@
             android:orientation="horizontal">
 
             <LinearLayout
-
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -404,6 +402,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:fontFamily="@font/sofia"
+                android:paddingBottom="10dp"
                 android:text="i love reading , swimming and playing football"
                 android:textColor="@color/appColor"
                 android:textSize="20dp" />
