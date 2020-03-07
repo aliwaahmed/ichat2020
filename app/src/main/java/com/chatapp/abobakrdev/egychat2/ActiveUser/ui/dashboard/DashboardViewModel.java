@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -48,63 +49,33 @@ public class DashboardViewModel extends ViewModel {
         Log.e("rw", String.valueOf(Day));
 
         DatabaseReference myRef = database.getReference("TimeLine");
-        DatabaseReference myRef1=   myRef  .child(String.valueOf(Day) + ":" + String.valueOf(Month));
+        DatabaseReference myRef1=   myRef  .child(String.valueOf(Day) + ":" + String.valueOf(Month+1));
 
-        // Read from the database
-
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-
-                // A new comment has been added, add it to the displayed list
+        if(myRef1!=null) {
 
 
-                // ...
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-
-
-                // ...
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        };
-
-        myRef1.addChildEventListener(childEventListener);
-
-        myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+            myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Map<String,Object> stringObjectMap =   (Map<String,Object>) dataSnapshot.getValue();
+                Map<String, Object> stringObjectMap = (Map<String, Object>) dataSnapshot.getValue();
                 //iterate through each user, ignoring their UID
-                Log.e("sss+",stringObjectMap.toString());
-                for (Map.Entry<String, Object> entry : stringObjectMap.entrySet()){
+                if(stringObjectMap!=null) {
+                    Log.e("sss+", stringObjectMap.toString());
+                    for (Map.Entry<String, Object> entry : stringObjectMap.entrySet()) {
+                        Map singleUser = (Map) entry.getValue();
+                        if(singleUser.size()>5) {
+                            post = new Post();
+                            post.setColor(singleUser.get("color").toString());
+                            post.setText(singleUser.get("txt").toString());
+                            post.setMail(singleUser.get("mail").toString());
+                            post.setName(singleUser.get("name").toString());
+                            post.setImg(singleUser.get("img").toString());
+                            post.setDate(singleUser.get("date").toString());
+                            arrayList.add(post);
+                        }
 
-                    //Get user map
-                    Map singleUser = (Map) entry.getValue();
-                     Log.e("color",singleUser.get("color").toString());
-
-                    //Get phone field and append to listLog.e("color",singleUser.get("color").toString());
+                    }
+                    list.postValue(arrayList);
                 }
             }
 
@@ -113,6 +84,7 @@ public class DashboardViewModel extends ViewModel {
 
             }
         });
+    }
 
 
     }

@@ -13,6 +13,11 @@
     <string name="extended_fab_label">a</string>
     <string name="timeline">Timeline</string>
 
+    <string name="item1">#FFFAC3</string>
+    <string name="item2">#E4F2FD</string>
+    <string name="item3">#FFEAED</string>
+    <string name="EnterPost">Enter Text</string>
+    <string name="ad_unit_id">ca-app-pub-3940256099942544/5224354917</string>
 
     <string-array name="day">
         <item>"day"</item>

@@ -5,8 +5,8 @@ public class Post {
     private String color ;
     private String mail;
     private String date;
-    private String day;
-
+    private String img;
+    private String name;
     public Post() {
     }
 
@@ -15,7 +15,24 @@ public class Post {
         this.color = color;
         this.mail = mail;
         this.date = date;
-        this.day = day;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getText() {
@@ -50,11 +67,4 @@ public class Post {
         this.date = date;
     }
 
-    public String getDay() {
-        return day;
-    }
-
-    public void setDay(String day) {
-        this.day = day;
-    }
 }

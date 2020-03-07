@@ -21,9 +21,9 @@
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
             android:layout_marginEnd="8dp"
             android:fontFamily="serif-monospace"
             android:text="2:20 PM"
@@ -75,12 +75,13 @@
                     app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
 
-                <view
+                <ImageView
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="16dp"
                     android:background="@color/gray"
+                    app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -93,14 +94,14 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:inputType="textMultiLine"
-                    android:text="hi ali sami hi new post new post new post
-                    hi ali sami hi new post new post new post "
+
                     app:layout_constraintBottom_toTopOf="@+id/view"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

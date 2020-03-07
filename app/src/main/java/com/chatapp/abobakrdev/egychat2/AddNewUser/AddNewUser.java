@@ -100,15 +100,13 @@ public class AddNewUser {
      * @param time
      */
     public void add_To_active_user(String mail, String time,String name ,String img,String gender) {
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("active_user").child(mail);
-        myRef.child(mail).setValue(mail);
+        DatabaseReference myRef = database.getReference("active_user").child(Remove_delemeter(mail));
+        myRef.child("mail").setValue(mail);
         myRef.child("name").setValue(name);
         myRef.child("time").setValue(time);
         myRef.child("gender").setValue(gender);
         myRef.child("img").setValue(img);
-
     }
 
     /**
@@ -138,39 +136,42 @@ public class AddNewUser {
 
     }
 
+
     /**
      *
      * @param name
      * @param mail
+     * @param txt
      * @param color
-     * @param day
      * @param date
      * @param ref
      */
-
-    public void add_post(String name ,String mail ,String color,String day,String date,String ref)
+    public void add_post(String name ,String mail ,String  txt,String color,String date,String ref,String img)
     {
 
         DatabaseReference myRef = database.getReference("TimeLine").child(ref).push();
 
 
+        myRef.child("txt").setValue(txt);
         myRef.child("name").setValue(name);
         myRef.child("mail").setValue(mail);
         myRef.child("color").setValue(color);
-        myRef.child("day").setValue(day);
         myRef.child("date").setValue(date);
-        myRef.child("ref").setValue(ref);
+        myRef.child("img").setValue(img);
+
+
+
 
 
     }
-    private static final String ALLOWED_CHARACTERS ="0123456789qwertyuiopasdfghjklzxcvbnm";
 
-    private static String getRandomString(final int sizeOfRandomString)
-    {
-        final Random random=new Random();
-        final StringBuilder sb=new StringBuilder(sizeOfRandomString);
-        for(int i=0;i<sizeOfRandomString;++i)
-            sb.append(ALLOWED_CHARACTERS.charAt(random.nextInt(ALLOWED_CHARACTERS.length())));
-        return sb.toString();
-    }
+
+
+
+
+
+
+
+
+
 }

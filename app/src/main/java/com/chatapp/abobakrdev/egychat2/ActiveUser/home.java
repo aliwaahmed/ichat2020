@@ -60,7 +60,7 @@ public class home extends AppCompatActivity {
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        addNewUser.add_To_active_user(mail,currentTime,name,img,gender);
+        addNewUser.add_To_active_user(sharedPreferences.getString("Gmail", "-1"),currentTime,name,img,gender);
     }
 
     @Override
