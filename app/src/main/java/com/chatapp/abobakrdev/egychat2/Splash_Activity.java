@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.chatapp.abobakrdev.egychat2.login.MainActivity;
+
 public class Splash_Activity extends AppCompatActivity {
 
     @Override

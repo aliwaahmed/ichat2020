@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 
 
         <!-- Customize your theme here. -->
@@ -16,6 +16,11 @@
 
 
     </style>
+
+
+
+
+    <style name="Dialog.Alert" parent="Theme.AppCompat.DayNight.Dialog.Alert"/>
 
 
 

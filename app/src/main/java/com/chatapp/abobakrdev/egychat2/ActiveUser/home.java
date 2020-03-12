@@ -63,35 +63,8 @@ public class home extends AppCompatActivity {
         addNewUser.add_To_active_user(sharedPreferences.getString("Gmail", "-1"),currentTime,name,img,gender);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        addNewUser.remove_active_user(mail);
-
-    }
 
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        addNewUser.remove_active_user(mail);
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        addNewUser.remove_active_user(mail);
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        addNewUser.remove_active_user(mail);
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -159,7 +159,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                     String delegate = "hh:mm aaa";
                     addNewUser.add_post(
                             sharedPreferences.getString("name", "-1"),
-                            sharedPreferences.getString("mail", "-1"),
+                            sharedPreferences.getString("email", "-1"),
                             txt.getText().toString(),
                             color,
                             String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime()))
@@ -198,7 +198,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onChanged(ArrayList<Post> posts) {
 
-                if(posts.size()>0) {
+                if(posts.size()>0&&posts!=null) {
                     progressBar.setVisibility(View.INVISIBLE);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(new postAdapter(getContext(), posts));

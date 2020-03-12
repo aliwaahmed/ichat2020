@@ -4,8 +4,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.dashboard.model.Post;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model.model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -101,25 +106,27 @@ public class AddNewUser {
      */
     public void add_To_active_user(String mail, String time,String name ,String img,String gender) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("active_user").child(Remove_delemeter(mail));
-        myRef.child("mail").setValue(mail);
-        myRef.child("name").setValue(name);
-        myRef.child("time").setValue(time);
-        myRef.child("gender").setValue(gender);
-        myRef.child("img").setValue(img);
-    }
 
-    /**
-     *
-     * @param mail
-     */
-    public void remove_active_user(String mail) {
+        model jsonObject =new model() ;
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+            jsonObject.setMail(mail);
+            jsonObject.setName(name);
+
+            jsonObject.setTime_enter(time);
+
+            jsonObject.setGender(gender);
+
+            jsonObject.setImg(img);
+
+
+
         DatabaseReference myRef = database.getReference("active_user");
+        myRef.child(Remove_delemeter(mail))
+                .setValue(jsonObject);
 
-        myRef.child(mail).removeValue();
     }
+
+
 
     /**
      *
@@ -151,14 +158,14 @@ public class AddNewUser {
 
         DatabaseReference myRef = database.getReference("TimeLine").child(ref).push();
 
-
-        myRef.child("txt").setValue(txt);
-        myRef.child("name").setValue(name);
-        myRef.child("mail").setValue(mail);
-        myRef.child("color").setValue(color);
-        myRef.child("date").setValue(date);
-        myRef.child("img").setValue(img);
-
+        Post post =new Post();
+        post.setColor(color);
+        post.setName(name);
+        post.setColor(color);
+        post.setImg(img);
+        post.setMail(mail);
+        post.setText(txt);
+        myRef.setValue(post);
 
 
 
