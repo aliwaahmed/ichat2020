@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.home;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.CompleteInfo.Completeinfo;
+import com.chatapp.abobakrdev.egychat2.DarkMode.InitApplication;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -44,9 +45,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
 
 

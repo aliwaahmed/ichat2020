@@ -32,22 +32,20 @@ public class home extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
 
-    private  String name  ;
-    private  String mail  ;
-    private  String age   ;
-    private  String gender;
-    private  String img   ;
+    private String name;
+    private String mail;
+    private String age;
+    private String gender;
+    private String img;
     private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (InitApplication.getInstance(getApplicationContext()).isNightModeEnabled()) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+
+
         setContentView(R.layout.activity_home);
+
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -60,11 +58,11 @@ public class home extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
-         name   = sharedPreferences.getString("name", "-1");
-         mail   = sharedPreferences.getString("mail", "-1");
-         age    = sharedPreferences.getString("age", "-1");
-         gender = sharedPreferences.getString("gender", "-1");
-         img    = sharedPreferences.getString("img", "-1");
+        name = sharedPreferences.getString("name", "-1");
+        mail = sharedPreferences.getString("mail", "-1");
+        age = sharedPreferences.getString("age", "-1");
+        gender = sharedPreferences.getString("gender", "-1");
+        img = sharedPreferences.getString("img", "-1");
 
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
@@ -73,13 +71,10 @@ public class home extends AppCompatActivity {
 
         AddNewUser.getInstance(getApplicationContext()).
                 add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
-                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())),name,img,gender);
-
+                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())), name, img, gender);
 
 
     }
-
-
 
 
     @Override

@@ -41,6 +41,7 @@ import com.bumptech.glide.Glide;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.DarkMode.InitApplication;
 import com.chatapp.abobakrdev.egychat2.R;
+import com.chatapp.abobakrdev.egychat2.login.Splash_Activity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -99,18 +100,28 @@ public class SettingFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+
                     InitApplication.getInstance(getContext()).setIsNightModeEnabled(true);
-                    Intent intent = getActivity().getIntent();
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    getActivity().finish();
-                    startActivity(intent);
+                    if (InitApplication.getInstance(getContext()).isNightModeEnabled()) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+                    }
+
 
                 } else {
                     InitApplication.getInstance(getContext()).setIsNightModeEnabled(false);
-                    Intent intent = getActivity().getIntent();
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    getActivity().finish();
-                    startActivity(intent);
+
+                    if (InitApplication.getInstance(getContext()).isNightModeEnabled()) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+                    }
+
                 }
 
 
