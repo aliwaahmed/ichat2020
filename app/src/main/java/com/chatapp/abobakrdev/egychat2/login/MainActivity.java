@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     TextView textView;
     private static final int RC_SIGN_IN = 1;
     FirebaseAuth mAuth;
-    private AddNewUser addNewUser;
     private GoogleSignInAccount account;
     private SharedPreferences sharedPreferences;
 
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
         else {
 
-            addNewUser = new AddNewUser(this);
             FirebaseApp.initializeApp(getApplicationContext());
 
             mAuth = FirebaseAuth.getInstance();

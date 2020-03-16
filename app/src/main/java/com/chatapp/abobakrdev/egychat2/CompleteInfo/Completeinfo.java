@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Completeinfo extends AppCompatActivity {
-    private AddNewUser addNewUser ;
     private String  name,mail,img;
     private RadioGroup radioGroup ;
     private String gender;
@@ -43,7 +42,6 @@ public class Completeinfo extends AppCompatActivity {
         setContentView(R.layout.completeinfo);
 
 
-        addNewUser=new AddNewUser(this);
         radioGroup=findViewById(R.id.radioGroup);
         Phone =findViewById(R.id._phone);
         _calendar=findViewById(R.id._calendar);
@@ -113,7 +111,7 @@ public class Completeinfo extends AppCompatActivity {
         }
         else
         {
-        addNewUser.add_user(name,mail,radioButton.getText().toString(), date.getText().toString(),
+            AddNewUser.getInstance(getApplicationContext()).add_user(name,mail,radioButton.getText().toString(), date.getText().toString(),
                 Phone.getText().toString(),img);
 
 

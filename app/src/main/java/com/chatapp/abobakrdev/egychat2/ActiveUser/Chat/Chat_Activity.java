@@ -33,7 +33,6 @@ public class Chat_Activity extends AppCompatActivity {
     private TextView name ;
     private CircleImageView  img;
     private ImageView send ;
-    private AddNewUser addNewUser ;
     String delegate = "hh:mm aaa";
     private chatViewmodel  chatViewmodel ;
 
@@ -47,7 +46,8 @@ public class Chat_Activity extends AppCompatActivity {
         send =findViewById(R.id.Send_msg);
         name.setText(getIntent().getExtras().getString("name"));
         Glide.with(getApplicationContext()).load(getIntent().getExtras().getString("img")).into(img);
-        addNewUser=new AddNewUser(getApplicationContext());
+
+        Log.e("mailto:",getIntent().getExtras().getString("mail","-1"));
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,10 +58,13 @@ public class Chat_Activity extends AppCompatActivity {
                 message.setTxt("dsf");
                 message.setType("0");
                 message.setSend("0");
-                message.setTimeStamp(timeStamp);
+
+               // message.setTimeStamp(timeStamp);
 
 
-                addNewUser.SendMessage(getIntent().getExtras().getString("mail","-2"),
+                AddNewUser.getInstance(getApplicationContext()).
+                        SendMessage(AddNewUser.getInstance(getApplicationContext()).
+                                        Remove_delemeter(getIntent().getExtras().getString("mail","-1")),
                        message);
 
 
@@ -70,7 +73,7 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
-        chatViewmodel.HomeViewModel(new  AddNewUser(getApplicationContext()).Remove_delemeter(getIntent().getExtras().getString("mail","-2")),getApplicationContext())
+        chatViewmodel.HomeViewModel(AddNewUser.getInstance(getApplicationContext()).Remove_delemeter(getIntent().getExtras().getString("mail","-2")),getApplicationContext())
                 .observe(this, new Observer<ArrayList<Message>>() {
             @Override
             public void onChanged(ArrayList<Message> messages) {

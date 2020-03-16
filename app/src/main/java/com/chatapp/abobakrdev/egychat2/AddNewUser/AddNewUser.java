@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,15 +33,94 @@ import androidx.annotation.NonNull;
 
 public class AddNewUser {
 
-    private Context context;
-    private SharedPreferences.Editor sharedPreferences;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private static Context context;
+    private static SharedPreferences.Editor sharedPreferences;
+    private static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    SharedPreferences sharedPreferences1;
+    private static SharedPreferences sharedPreferences1;
+    private static HashMap<String, Integer> map;
 
-    public AddNewUser(Context context) {
-        this.context = context;
-        sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE).edit();
+    private static AddNewUser addNewUser;
+
+    public static AddNewUser getInstance(Context context1) {
+
+        if (addNewUser == null) {
+            addNewUser = new AddNewUser();
+            context = context1;
+            map = new HashMap<>();
+            sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE).edit();
+            map.put("A", 1);
+            map.put("B", 2);
+            map.put("C", 3);
+            map.put("D", 4);
+            map.put("E", 5);
+            map.put("F", 6);
+            map.put("G", 7);
+            map.put("H", 8);
+            map.put("I", 9);
+            map.put("J", 10);
+            map.put("K", 11);
+            map.put("L", 12);
+            map.put("M", 13);
+
+            map.put("N", 14);
+            map.put("O", 15);
+            map.put("P", 16);
+            map.put("Q", 17);
+            map.put("R", 18);
+            map.put("S", 19);
+            map.put("T", 20);
+            map.put("U", 21);
+            map.put("V", 22);
+            map.put("W", 23);
+            map.put("X", 14);
+            map.put("Y", 25);
+            map.put("Z", 26);
+
+
+            map.put("a", 27);
+            map.put("b", 28);
+            map.put("c", 29);
+            map.put("d", 30);
+            map.put("e", 31);
+            map.put("f", 32);
+            map.put("g", 33);
+            map.put("h", 34);
+            map.put("i", 35);
+            map.put("j", 36);
+            map.put("k", 37);
+            map.put("l", 38);
+            map.put("m", 39);
+            map.put("n", 40);
+            map.put("o", 41);
+            map.put("p", 42);
+            map.put("q", 43);
+            map.put("r", 44);
+            map.put("s", 45);
+            map.put("t", 46);
+            map.put("u", 47);
+            map.put("v", 48);
+            map.put("w", 49);
+            map.put("x", 50);
+            map.put("y", 51);
+            map.put("z", 52);
+
+
+            map.put("0", 53);
+            map.put("1", 54);
+            map.put("2", 55);
+            map.put("3", 56);
+            map.put("4", 57);
+            map.put("5", 58);
+            map.put("6", 59);
+            map.put("7", 60);
+            map.put("8", 61);
+            map.put("9", 62);
+
+        }
+
+        return addNewUser;
+
     }
 
 
@@ -74,6 +154,7 @@ public class AddNewUser {
         sharedPreferences.putString("gender", gender);
         sharedPreferences.putString("img", img);
         sharedPreferences.putString("phone", phone);
+
         sharedPreferences.apply();
         sharedPreferences.commit();
         DatabaseReference subimg = refmail.child("images").getRef().child("img0");
@@ -121,7 +202,9 @@ public class AddNewUser {
      */
     public void add_To_active_user(String mail, String time, String name, String img, String gender) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        SharedPreferences sharedPreferences;
 
+        sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
         model jsonObject = new model();
 
         jsonObject.setMail(mail);
@@ -132,6 +215,8 @@ public class AddNewUser {
         jsonObject.setGender(gender);
 
         jsonObject.setImg(img);
+
+        jsonObject.setHashkey(sharedPreferences.getString("hash", "-1"));
 
 
         DatabaseReference myRef = database.getReference("active_user");
@@ -180,29 +265,71 @@ public class AddNewUser {
 
     }
 
-    public void SendMessage(final String mail, final Message message) {
-        SharedPreferences sharedPreferences;
+    /***
+     * @param mail
+     * @param message
+     */
+    public void SendMessage(String mail, Message message) {
 
+
+        SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
 
-       database.getReference("users")
-                .child(Remove_delemeter(mail))
-                .child("chats")
-                .child(sharedPreferences.getString("mail","-1"))
-                .child(String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())))
-                .setValue(message);
+        StringBuilder  key = new StringBuilder();
+        StringBuilder key1=new StringBuilder();
 
-        // initializing unsorted int array
-        int iArr[] = {2, 1, 9, 6, 4};
+        StringBuilder stringBuilder =new StringBuilder();
+
+        for (int i = 0; i < mail.length(); i++) {
+
+            key .append(map.get(String.valueOf(mail.charAt(i))));
+        }
 
 
+        for (int i = 0; i < sharedPreferences.getString("mail", "-1").length(); i++) {
+            key1.append( map.get(String.valueOf(sharedPreferences.getString("mail", "-1").charAt(i))));
+        }
 
-        // sorting array
-        Arrays.sort(iArr);
+        DatabaseReference myRef;
+        if(Double.parseDouble(key.toString())>Double.parseDouble(key1.toString()))
+        {
+            stringBuilder.append(String.valueOf(key)+":"+String.valueOf(key1));
+
+        }
+        else
+        {
+            stringBuilder.append(String.valueOf(key1)+":"+String.valueOf(key));
+
+
+        }
+        myRef = database.getReference("chats")
+                .child(String.valueOf(stringBuilder)).push();
+
+
+        myRef.child("msg").setValue(message);
+
+        Log.e("meMail", sharedPreferences.getString("mail", "-1"));
+        Log.e("MailTo:", mail);
 
 
     }
+    public static String sha256(String base) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+            StringBuffer hexString = new StringBuffer();
 
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
 
 

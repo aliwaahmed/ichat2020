@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
@@ -13,6 +14,7 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,7 +30,6 @@ import androidx.navigation.ui.NavigationUI;
 
 public class home extends AppCompatActivity {
 
-    private AddNewUser addNewUser ;
     private SharedPreferences sharedPreferences;
 
     private  String name  ;
@@ -53,7 +54,6 @@ public class home extends AppCompatActivity {
         mAdView.setVisibility(View.GONE);
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
 
-        addNewUser=new AddNewUser(this);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -71,7 +71,12 @@ public class home extends AppCompatActivity {
         String delegate = "hh:mm aaa";
 
 
-        addNewUser.add_To_active_user(sharedPreferences.getString("Gmail", "-1"), String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())),name,img,gender);
+        AddNewUser.getInstance(getApplicationContext()).
+                add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
+                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())),name,img,gender);
+
+
+
     }
 
 

@@ -6,6 +6,15 @@ public class model {
     private String img;
     private String gender;
     private String time_enter;
+    private String  hashkey;
+
+    public String getHashkey() {
+        return hashkey;
+    }
+
+    public void setHashkey(String hashkey) {
+        this.hashkey = hashkey;
+    }
 
     public String getName() {
         return name;

@@ -56,7 +56,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private AdRequest adRequest;
     private ImageView _POST;
     private EditText txt;
-    private AddNewUser addNewUser;
     private SharedPreferences sharedPreferences;
     private ImageView imageView6, imageView7, imageView8;
     private String color;
@@ -75,7 +74,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         mediaPlayer = MediaPlayer.create(getContext(), R.raw.postsound);
 
-        addNewUser = new AddNewUser(getActivity());
         final View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
         progressBar = root.findViewById(R.id.progressBar);
         swip = root.findViewById(R.id.swap);
@@ -156,7 +154,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                     Log.e("rw", String.valueOf(Month));
                     Log.e("rw", String.valueOf(Day));
                     String delegate = "hh:mm aaa";
-                    addNewUser.add_post(
+                    AddNewUser.getInstance(getContext()).add_post(
                             sharedPreferences.getString("name", "-1"),
                             sharedPreferences.getString("email", "-1"),
                             txt.getText().toString(),

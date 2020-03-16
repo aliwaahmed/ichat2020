@@ -79,7 +79,6 @@ public class SettingFragment extends Fragment {
 
     private ImageView imageView0;
     private StorageReference mStorageRef;
-    private AddNewUser addNewUser;
     private SharedPreferences.Editor sharedPreferences1;
     private ProgressDialog progressDialog;
     private EditText about;
@@ -131,7 +130,6 @@ public class SettingFragment extends Fragment {
         _profile_recycler_img1 = root.findViewById(R.id._profile_recycler_img1);
         Add0 = root.findViewById(R.id.Add0);
         Add1 = root.findViewById(R.id.Add1);
-        addNewUser = new AddNewUser(getActivity());
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Upload New Image");
         progressDialog.setCancelable(false);
@@ -197,7 +195,7 @@ public class SettingFragment extends Fragment {
                 if (!about.getText().toString().isEmpty()) {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(root.getWindowToken(), 0);
-                    addNewUser.update_about_me(mail, about.getText().toString());
+                    AddNewUser.getInstance(getContext()).update_about_me(mail, about.getText().toString());
                     edit_statue.setVisibility(View.VISIBLE);
                     update_statue.setVisibility(View.GONE);
                     close_statue.setVisibility(View.GONE);
@@ -403,7 +401,7 @@ public class SettingFragment extends Fragment {
                             public void onSuccess(Uri uri) {
                                 // uri is your download path
                                 Log.e("path", uri.toString());
-                                addNewUser.add_img_profile(String.valueOf(uri), sharedPreferences.getString("mail", "-1"));
+                                AddNewUser.getInstance(getContext()).add_img_profile(String.valueOf(uri), sharedPreferences.getString("mail", "-1"));
                                 sharedPreferences1.putString("img", uri.toString());
                                 sharedPreferences1.apply();
                                 progressDialog.dismiss();
@@ -456,7 +454,7 @@ public class SettingFragment extends Fragment {
                             public void onSuccess(Uri uri) {
                                 // uri is your download path
                                 Log.e("path", uri.toString());
-                                addNewUser.add_img(String.valueOf(uri), sharedPreferences.getString("mail", "-1"), img0);
+                                AddNewUser.getInstance(getContext()).add_img(String.valueOf(uri), sharedPreferences.getString("mail", "-1"), img0);
                                 sharedPreferences1.putString(img0, uri.toString());
                                 sharedPreferences1.apply();
                                 progressDialog.dismiss();
