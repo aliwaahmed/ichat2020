@@ -9,7 +9,7 @@
     android:orientation="vertical"
     android:background="@drawable/gradient"
     android:layout_height="match_parent"
-    tools:context=".Splash_Activity">
+    tools:context=".login.Splash_Activity">
 
 
     <ImageView

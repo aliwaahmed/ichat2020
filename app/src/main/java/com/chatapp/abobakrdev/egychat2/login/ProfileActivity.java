@@ -1,4 +1,4 @@
-package com.chatapp.abobakrdev.egychat2;
+package com.chatapp.abobakrdev.egychat2.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.chatapp.abobakrdev.egychat2.R;
 import com.chatapp.abobakrdev.egychat2.login.MainActivity;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
