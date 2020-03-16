@@ -91,7 +91,7 @@ public class SettingFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.my_profile_layout, container, false);
-        Switch switchCompat = getActivity().findViewById(R.id._switch);
+        Switch switchCompat =root.findViewById(R.id._switch);
 
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
             switchCompat.setChecked(true);

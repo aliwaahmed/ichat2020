@@ -23,8 +23,8 @@
         <activity
             android:name=".login.MainActivity"
             android:label="@string/title_activity_home" />
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".Splash_Activity">
+        <activity android:name=".login.ProfileActivity" />
+        <activity android:name=".login.Splash_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
