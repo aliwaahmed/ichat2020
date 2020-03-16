@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/_lin"
     android:layout_marginTop="1dp"
     android:orientation="vertical">
 
@@ -34,22 +35,37 @@
 
                 <TextView
                     android:id="@+id/_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Name"
-                    android:textColor="@color/appColor"
-                    android:fontFamily="@font/ja"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginLeft="20dp"/>
-
-                <TextView
-                    android:id="@+id/_age"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Age"
-                    android:textColor="@color/appColor"
                     android:fontFamily="@font/ja"
-                    android:layout_marginLeft="20dp"/>
+                    android:text="Name"
+                    android:textColor="@color/appColor" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:textColor="@color/appColor"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Time Enter" />
+
+                    <TextView
+                        android:id="@+id/_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:fontFamily="@font/ja"
+                        android:text="time Enter"
+                        android:textColor="@color/appColor" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -59,12 +75,12 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:gravity="right"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="30dp"
+                    android:gravity="right"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -77,13 +93,14 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/_gender"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="30dp"
-                    android:backgroundTint="#9b0493"
-                    android:background="@drawable/male"/>
+
+                    android:backgroundTint="#9b0493" />
 
             </LinearLayout>
         </LinearLayout>

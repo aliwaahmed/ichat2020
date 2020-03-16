@@ -22,9 +22,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class postAdapter extends RecyclerView.Adapter <Viewholder>{
-    private Context context ;
-    private ArrayList<Post> arrayList ;
+public class postAdapter extends RecyclerView.Adapter<Viewholder> {
+    private Context context;
+    private ArrayList<Post> arrayList;
 
     public postAdapter(Context context, ArrayList<Post> arrayList) {
         this.context = context;
@@ -34,7 +34,7 @@ public class postAdapter extends RecyclerView.Adapter <Viewholder>{
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Viewholder(LayoutInflater.from(context).inflate(R.layout.post_item,parent,false));
+        return new Viewholder(LayoutInflater.from(context).inflate(R.layout.post_item, parent, false));
     }
 
     @Override
@@ -49,34 +49,34 @@ public class postAdapter extends RecyclerView.Adapter <Viewholder>{
 
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
-        public void onClick(View v) {
-            holder.like.setColorFilter(ContextCompat.getColor(context,
-                    R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
+            public void onClick(View v) {
+                holder.like.setColorFilter(ContextCompat.getColor(context,
+                        R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
 
-        }
-    });
+            }
+        });
 
 
         holder.dislike.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            holder.dislike.setColorFilter(ContextCompat.getColor(context,
-                    R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
-        }
-    });
-    holder.Share.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
+                holder.dislike.setColorFilter(ContextCompat.getColor(context,
+                        R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
+            }
+        });
+        holder.Share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-            sharingIntent.setType("text/plain");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "$"+arrayList.get(position).getName()+"\n"
-                    +arrayList.get(position).getText());
-           context.startActivity(Intent.createChooser(sharingIntent, "Share "));
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "$" + arrayList.get(position).getName() + "\n"
+                        + arrayList.get(position).getText());
+                context.startActivity(Intent.createChooser(sharingIntent, "Share "));
 
 
-        }
-    });
+            }
+        });
 
 
     }
@@ -87,25 +87,23 @@ public class postAdapter extends RecyclerView.Adapter <Viewholder>{
     }
 }
 
-class  Viewholder extends RecyclerView.ViewHolder
-{
+class Viewholder extends RecyclerView.ViewHolder {
 
     public CircleImageView circleImageView;
-    public TextView name,txt,time;
+    public TextView name, txt, time;
     public MaterialCardView materialCardView;
-    public  ImageView like,dislike,Share;
+    public ImageView like, dislike, Share;
+
     public Viewholder(@NonNull View itemView) {
         super(itemView);
-        circleImageView =itemView.findViewById(R.id.circleImageView);
-        name=itemView.findViewById(R.id.textView3);
-        txt=itemView.findViewById(R.id.textView4);
-        time=itemView.findViewById(R.id.textView2);
-        materialCardView=itemView.findViewById(R.id.materialCardView);
-        like=itemView.findViewById(R.id.imageView6);
-        dislike=itemView.findViewById(R.id.imageView7);
-        Share=itemView.findViewById(R.id._POST);
-
-
+        circleImageView = itemView.findViewById(R.id.circleImageView);
+        name = itemView.findViewById(R.id.textView3);
+        txt = itemView.findViewById(R.id.textView4);
+        time = itemView.findViewById(R.id.textView2);
+        materialCardView = itemView.findViewById(R.id.materialCardView);
+        like = itemView.findViewById(R.id.imageView6);
+        dislike = itemView.findViewById(R.id.imageView7);
+        Share = itemView.findViewById(R.id._POST);
 
 
     }

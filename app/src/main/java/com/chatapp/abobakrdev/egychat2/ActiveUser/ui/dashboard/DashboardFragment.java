@@ -58,35 +58,35 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private EditText txt;
     private AddNewUser addNewUser;
     private SharedPreferences sharedPreferences;
-    private ImageView imageView6 ,imageView7,imageView8;
+    private ImageView imageView6, imageView7, imageView8;
     private String color;
-    private RecyclerView recyclerView ;
-    private LinearLayoutManager linearLayoutManager ;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swip;
     private ProgressBar progressBar;
-    private MediaPlayer mediaPlayer ;
+    private MediaPlayer mediaPlayer;
     InterstitialAd mInterstitialAd;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        sharedPreferences =getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
-        mediaPlayer=MediaPlayer.create(getContext(),R.raw.postsound);
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.postsound);
 
-        addNewUser=new AddNewUser(getActivity());
+        addNewUser = new AddNewUser(getActivity());
         final View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        progressBar=root.findViewById(R.id.progressBar);
-        swip =root.findViewById(R.id.swap);
+        progressBar = root.findViewById(R.id.progressBar);
+        swip = root.findViewById(R.id.swap);
         getActivity().getWindow().setSoftInputMode(SOFT_INPUT_ADJUST_PAN);
-        linearLayoutManager=new LinearLayoutManager(getActivity());
-        recyclerView=root.findViewById(R.id.recyclerView2);
-        _POST =root.findViewById(R.id._POST);
-        txt=root.findViewById(R.id.textView4);
-        imageView6=root.findViewById(R.id.imageView6);
-        imageView7=root.findViewById(R.id.imageView7);
-        imageView8=root.findViewById(R.id.imageView8);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView = root.findViewById(R.id.recyclerView2);
+        _POST = root.findViewById(R.id._POST);
+        txt = root.findViewById(R.id.textView4);
+        imageView6 = root.findViewById(R.id.imageView6);
+        imageView7 = root.findViewById(R.id.imageView7);
+        imageView8 = root.findViewById(R.id.imageView8);
         mAdView = root.findViewById(R.id.adView);
         adRequest = new AdRequest.Builder().build();
         final BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from(root.findViewById(R.id.bottom_sheet));
@@ -135,10 +135,9 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                     public void onChanged(ArrayList<Post> posts) {
 
 
-                        recyclerView .setLayoutManager(linearLayoutManager);
-                        recyclerView.setAdapter(new postAdapter(getContext(),posts));
-                        if(posts.size()>0)
-                        {
+                        recyclerView.setLayoutManager(linearLayoutManager);
+                        recyclerView.setAdapter(new postAdapter(getContext(), posts));
+                        if (posts.size() > 0) {
                             swip.setRefreshing(false);
                         }
 
@@ -151,7 +150,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         _POST.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!txt.getText().toString().isEmpty()) {
+                if (!txt.getText().toString().isEmpty()) {
                     int Month = Calendar.getInstance().get(Calendar.MONTH);
                     int Day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
                     Log.e("rw", String.valueOf(Month));
@@ -172,16 +171,13 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
 
                     mediaPlayer.start();
-                    Snackbar.make(root,"Post Add ",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(root, "Post Add ", Snackbar.LENGTH_LONG).show();
 
-                }
-                else
+                } else
                     txt.setError(getString(R.string.EnterPost));
 
             }
         });
-
-
 
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -198,11 +194,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onChanged(ArrayList<Post> posts) {
 
-                if(posts.size()>0&&posts!=null) {
+
                     progressBar.setVisibility(View.INVISIBLE);
                     recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(new postAdapter(getContext(), posts));
-                }
+
 
             }
         });

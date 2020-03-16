@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Chat_Activity">
+    tools:context=".ActiveUser.Chat.Chat_Activity">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -15,6 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
 
 
@@ -38,9 +42,10 @@
 
             <TextView
                 android:id="@+id/textView6"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
                 android:fontFamily="@font/ja"
                 android:gravity="center_vertical"
                 android:text="Name"
@@ -48,8 +53,7 @@
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.179"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/circleImageView2"
                 app:layout_constraintTop_toTopOf="@+id/circleImageView2"
                 app:layout_constraintVertical_bias="0.0"
                 tools:ignore="MissingConstraints" />
@@ -60,12 +64,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView3"
-        android:layout_width="405dp"
-        android:layout_height="628dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar2"
         tools:ignore="MissingConstraints"
-        tools:listitem="@layout/my_msgs_layout" />
+        tools:listitem="@layout/recieved_msg" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -79,8 +85,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView3"
         tools:ignore="MissingConstraints">
 
 
@@ -98,6 +103,7 @@
             android:paddingRight="10dp" />
 
         <ImageView
+            android:id="@+id/Send_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"

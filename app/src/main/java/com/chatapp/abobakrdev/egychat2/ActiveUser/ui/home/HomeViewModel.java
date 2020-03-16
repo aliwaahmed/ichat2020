@@ -13,6 +13,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -24,13 +25,14 @@ import androidx.lifecycle.ViewModel;
 public class HomeViewModel extends ViewModel {
 
 
-    private MutableLiveData<String> mText;
+    private MutableLiveData<HashMap<String, model>> mText;
     private com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model.model model;
-    List<model> td;
+    private HashMap<String, model> models;
 
-    public LiveData<String> HomeViewModel() {
+    public LiveData<HashMap<String, model>> HomeViewModel() {
         if (mText == null) {
             mText = new MutableLiveData<>();
+            models = new HashMap<>();
             get_online_User();
             return mText;
         } else {
@@ -49,13 +51,15 @@ public class HomeViewModel extends ViewModel {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                Log.e("data",dataSnapshot.getKey().toString());
+                Log.e("data", dataSnapshot.getKey().toString());
                 model = dataSnapshot.getValue(model.class);
-                Log.e("name",model.getName());
-                Log.e("mail",model.getMail());
-                Log.e("gender",model.getGender());
-                Log.e("img",model.getImg());
-                Log.e("time",model.getTime_enter());
+                Log.e("name", model.getName());
+                Log.e("mail", model.getMail());
+                Log.e("gender", model.getGender());
+                Log.e("img", model.getImg());
+                Log.e("time", model.getTime_enter());
+                models.put(model.getMail().toString(), model);
+                mText.postValue(models);
 
             }
 
@@ -66,12 +70,20 @@ public class HomeViewModel extends ViewModel {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                model model1 = dataSnapshot.getValue(model.class);
+                Log.e("removename", model1.getName());
+                Log.e("removemail", model1.getMail());
+                Log.e("removegender", model1.getGender());
+                Log.e("removeimg", model1.getImg());
+                Log.e("removetime", model1.getTime_enter());
+                models.remove(model1.getMail());
+                mText.postValue(models);
 
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.e("datare",dataSnapshot.getKey().toString());
+                Log.e("datare", dataSnapshot.getKey().toString());
 
             }
 

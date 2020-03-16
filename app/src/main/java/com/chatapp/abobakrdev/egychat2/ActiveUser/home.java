@@ -3,6 +3,7 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
@@ -12,6 +13,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -59,8 +61,10 @@ public class home extends AppCompatActivity {
 
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        String delegate = "hh:mm aaa";
 
-        addNewUser.add_To_active_user(sharedPreferences.getString("Gmail", "-1"),currentTime,name,img,gender);
+
+        addNewUser.add_To_active_user(sharedPreferences.getString("Gmail", "-1"), String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())),name,img,gender);
     }
 
 

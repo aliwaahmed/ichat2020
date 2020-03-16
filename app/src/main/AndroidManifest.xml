@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Chat_Activity"></activity>
+        <activity android:name=".ActiveUser.Chat.Chat_Activity"></activity>
         <activity android:name=".Visit_profile_Activity" />
         <activity android:name=".CompleteInfo.Completeinfo" />
         <activity android:name=".ActiveUser.ui.Setting.Viewimage" />
