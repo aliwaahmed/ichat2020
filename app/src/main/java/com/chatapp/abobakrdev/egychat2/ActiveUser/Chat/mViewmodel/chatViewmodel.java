@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model.model;
+import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,10 +29,12 @@ public class chatViewmodel extends ViewModel {
     private Message model;
     private ArrayList<Message> models;
     SharedPreferences sharedPreferences;
+    private Context context1;
 
 
     public LiveData<ArrayList<Message>> HomeViewModel(String mail,Context context) {
         if (mText == null) {
+            context1=context;
             sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
 
             mText = new MutableLiveData<>();
@@ -48,15 +51,17 @@ public class chatViewmodel extends ViewModel {
    private void get_online_User(String mail) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-        DatabaseReference online_user = firebaseDatabase.getReference("users").child(sharedPreferences.getString("mail","-10"))
-                .child("chats").child(mail);
+        DatabaseReference online_user = firebaseDatabase.getReference("chats")
+                .child(AddNewUser.getInstance(context1).Generate_Child(mail));
+        ;
 
         online_user.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                Log.e("data", dataSnapshot.getKey().toString());
+                Log.e("data10", dataSnapshot.getKey().toString());
                 model = dataSnapshot.getValue(Message.class);
+
 
                 models.add(model);
                 mText.postValue(models);
@@ -89,43 +94,6 @@ public class chatViewmodel extends ViewModel {
 
 
 
-
-        DatabaseReference other = firebaseDatabase.getReference("users").child(mail)
-                .child("chats").child(sharedPreferences.getString("mail","-10"));
-
-        other.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                Log.e("data", dataSnapshot.getKey().toString());
-                model = dataSnapshot.getValue(Message.class);
-
-                models.add(model);
-                mText.postValue(models);
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
 

@@ -3,8 +3,11 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser.Chat;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -30,57 +33,58 @@ import java.util.concurrent.TimeUnit;
 public class Chat_Activity extends AppCompatActivity {
 
 
-    private TextView name ;
-    private CircleImageView  img;
-    private ImageView send ;
+    private TextView name;
+    private CircleImageView img;
+    private ImageView send;
     String delegate = "hh:mm aaa";
-    private chatViewmodel  chatViewmodel ;
+    private chatViewmodel chatViewmodel;
+    SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_);
-        chatViewmodel= ViewModelProviders.of(this).get(chatViewmodel.class);
-        name=findViewById(R.id.textView6);
-        img=findViewById(R.id.circleImageView2);
-        send =findViewById(R.id.Send_msg);
+        chatViewmodel = ViewModelProviders.of(this).get(chatViewmodel.class);
+        name = findViewById(R.id.textView6);
+        img = findViewById(R.id.circleImageView2);
+        send = findViewById(R.id.Send_msg);
         name.setText(getIntent().getExtras().getString("name"));
         Glide.with(getApplicationContext()).load(getIntent().getExtras().getString("img")).into(img);
+        sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
 
-        Log.e("mailto:",getIntent().getExtras().getString("mail","-1"));
+        Log.e("mailto:", getIntent().getExtras().getString("mail", "-1"));
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
 
-                Message message =new Message();
+                Message message = new Message();
                 message.setTime(String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())));
                 message.setTxt("dsf");
                 message.setType("0");
-                message.setSend("0");
+                message.setSend(sharedPreferences.getString("Gmail", "-1"));
 
-               // message.setTimeStamp(timeStamp);
+                // message.setTimeStamp(timeStamp);
 
 
                 AddNewUser.getInstance(getApplicationContext()).
                         SendMessage(AddNewUser.getInstance(getApplicationContext()).
-                                        Remove_delemeter(getIntent().getExtras().getString("mail","-1")),
-                       message);
-
-
+                                        Remove_delemeter(getIntent().getExtras().getString("mail", "-1")),
+                                message);
 
 
             }
         });
 
-        chatViewmodel.HomeViewModel(AddNewUser.getInstance(getApplicationContext()).Remove_delemeter(getIntent().getExtras().getString("mail","-2")),getApplicationContext())
+        chatViewmodel.HomeViewModel(AddNewUser.getInstance(getApplicationContext()).Remove_delemeter(getIntent().getExtras().getString("mail", "-2")), getApplicationContext())
                 .observe(this, new Observer<ArrayList<Message>>() {
-            @Override
-            public void onChanged(ArrayList<Message> messages) {
-                Log.e("msg",messages.toString());
+                    @Override
+                    public void onChanged(ArrayList<Message> messages) {
+                        Log.e("msg", messages.get(0).getTxt().toString());
 
-            }
-        });
+                    }
+                });
 
 
     }

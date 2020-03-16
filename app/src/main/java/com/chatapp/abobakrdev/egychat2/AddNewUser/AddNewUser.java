@@ -272,47 +272,48 @@ public class AddNewUser {
     public void SendMessage(String mail, Message message) {
 
 
+        DatabaseReference myRef;
+
+        myRef = database.getReference("chats")
+                .child(Generate_Child(mail)).push();
+
+
+        myRef.setValue(message);
+
+
+    }
+
+    public String Generate_Child(String mail) {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
 
-        StringBuilder  key = new StringBuilder();
-        StringBuilder key1=new StringBuilder();
+        StringBuilder key = new StringBuilder();
+        StringBuilder key1 = new StringBuilder();
 
-        StringBuilder stringBuilder =new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < mail.length(); i++) {
 
-            key .append(map.get(String.valueOf(mail.charAt(i))));
+            key.append(map.get(String.valueOf(mail.charAt(i))));
         }
 
 
         for (int i = 0; i < sharedPreferences.getString("mail", "-1").length(); i++) {
-            key1.append( map.get(String.valueOf(sharedPreferences.getString("mail", "-1").charAt(i))));
+            key1.append(map.get(String.valueOf(sharedPreferences.getString("mail", "-1").charAt(i))));
         }
 
-        DatabaseReference myRef;
-        if(Double.parseDouble(key.toString())>Double.parseDouble(key1.toString()))
-        {
-            stringBuilder.append(String.valueOf(key)+":"+String.valueOf(key1));
+        if (Double.parseDouble(key.toString()) > Double.parseDouble(key1.toString())) {
+            stringBuilder.append(String.valueOf(key) + ":" + String.valueOf(key1));
 
-        }
-        else
-        {
-            stringBuilder.append(String.valueOf(key1)+":"+String.valueOf(key));
+        } else {
+            stringBuilder.append(String.valueOf(key1) + ":" + String.valueOf(key));
 
 
         }
-        myRef = database.getReference("chats")
-                .child(String.valueOf(stringBuilder)).push();
-
-
-        myRef.child("msg").setValue(message);
-
-        Log.e("meMail", sharedPreferences.getString("mail", "-1"));
-        Log.e("MailTo:", mail);
-
+        return stringBuilder.toString();
 
     }
+
     public static String sha256(String base) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -330,7 +331,6 @@ public class AddNewUser {
             throw new RuntimeException(ex);
         }
     }
-
 
 
 }
