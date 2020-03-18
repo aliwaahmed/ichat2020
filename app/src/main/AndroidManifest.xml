@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+<uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/ichatlogo"
@@ -15,7 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ActiveUser.Chat.Chat_Activity"></activity>
+        <activity android:name=".ActiveUser.Chat.Chat_Activity"
+            android:theme="@style/Theme.AppCompat.Light"
+
+            />
         <activity android:name=".Visit_profile_Activity" />
         <activity android:name=".CompleteInfo.Completeinfo" />
         <activity android:name=".ActiveUser.ui.Setting.Viewimage" />
@@ -34,6 +37,9 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
+        <service android:name=".foregroundservices.notification">
+
+        </service>
     </application>
 
 </manifest>

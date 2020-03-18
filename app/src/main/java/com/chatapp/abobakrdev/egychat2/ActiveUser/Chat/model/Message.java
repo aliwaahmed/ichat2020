@@ -6,8 +6,16 @@ public class Message {
     private String timeStamp;
     private String time;
     private String send;
+    private String img;
 
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public String getSend() {
         return send;

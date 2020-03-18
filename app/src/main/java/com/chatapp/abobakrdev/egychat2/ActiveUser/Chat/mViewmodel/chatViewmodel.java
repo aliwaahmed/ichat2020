@@ -32,9 +32,9 @@ public class chatViewmodel extends ViewModel {
     private Context context1;
 
 
-    public LiveData<ArrayList<Message>> HomeViewModel(String mail,Context context) {
+    public LiveData<ArrayList<Message>> HomeViewModel(String mail, Context context) {
         if (mText == null) {
-            context1=context;
+            context1 = context;
             sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
 
             mText = new MutableLiveData<>();
@@ -48,12 +48,11 @@ public class chatViewmodel extends ViewModel {
     }
 
 
-   private void get_online_User(String mail) {
+    private void get_online_User(String mail) {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
         DatabaseReference online_user = firebaseDatabase.getReference("chats")
                 .child(AddNewUser.getInstance(context1).Generate_Child(mail));
-        ;
 
         online_user.addChildEventListener(new ChildEventListener() {
             @Override
@@ -89,14 +88,6 @@ public class chatViewmodel extends ViewModel {
 
             }
         });
-
-
-
-
-
-
-
-
 
 
     }

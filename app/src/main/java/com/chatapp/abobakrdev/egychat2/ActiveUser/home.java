@@ -2,6 +2,7 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.View;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.DarkMode.InitApplication;
 import com.chatapp.abobakrdev.egychat2.R;
+import com.chatapp.abobakrdev.egychat2.foregroundservices.notification;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,6 +25,7 @@ import java.util.Locale;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -38,6 +41,7 @@ public class home extends AppCompatActivity {
     private String gender;
     private String img;
     private AdView mAdView;
+    private  String delegate = "hh:mm aaa";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,14 @@ public class home extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
+        Intent serviceIntent = new Intent(this, notification.class);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent);
+        } else {
+            startService(serviceIntent);
+        }
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -66,7 +78,6 @@ public class home extends AppCompatActivity {
 
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        String delegate = "hh:mm aaa";
 
 
         AddNewUser.getInstance(getApplicationContext()).
@@ -80,5 +91,35 @@ public class home extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AddNewUser.getInstance(getApplicationContext()).
+                add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
+                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())), name, img, gender);
+
+
     }
 }

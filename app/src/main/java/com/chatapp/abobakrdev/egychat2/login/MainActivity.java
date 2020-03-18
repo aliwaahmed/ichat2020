@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.CompleteInfo.Completeinfo;
 import com.chatapp.abobakrdev.egychat2.DarkMode.InitApplication;
 import com.chatapp.abobakrdev.egychat2.R;
+import com.chatapp.abobakrdev.egychat2.foregroundservices.notification;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setContentView(R.layout.activity_main);
 
 
+
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         String name = sharedPreferences.getString("name", "-1");
         String mail = sharedPreferences.getString("mail", "-1");
@@ -56,14 +59,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         String gender = sharedPreferences.getString("gender", "-1");
         String img = sharedPreferences.getString("img", "-1");
 
-        if(!mail.equals("-1"))
-        {
-            Intent intent =new Intent(this, home.class);
+        if (!mail.equals("-1")) {
+            Intent intent = new Intent(this, home.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             this.finish();
-        }
-        else {
+        } else {
 
             FirebaseApp.initializeApp(getApplicationContext());
 

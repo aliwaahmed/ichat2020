@@ -1,8 +1,12 @@
 package com.chatapp.abobakrdev.egychat2.ActiveUser.Chat;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -12,10 +16,14 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.ChatAdapter.Adapter;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.mViewmodel.chatViewmodel;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.HomeViewModel;
@@ -35,23 +43,52 @@ public class Chat_Activity extends AppCompatActivity {
 
     private TextView name;
     private CircleImageView img;
-    private ImageView send;
+    private LinearLayout send;
     String delegate = "hh:mm aaa";
     private chatViewmodel chatViewmodel;
     SharedPreferences sharedPreferences;
+    private EditText _txtmsg;
+    private RecyclerView recyclerView3;
+    private Adapter adapter;
+    private LinearLayoutManager linearLayoutManager;
+    private View viewactionbar;
+
+    public void LoadActionBar() {
+
+        viewactionbar = getSupportActionBar().getCustomView();
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.chatactionbar);
+
+
+        name = findViewById(R.id.name);
+        img = findViewById(R.id.img);
+
+
+        name.setText(getIntent().getExtras().getString("name"));
+        Glide.with(getApplicationContext()).load(getIntent().getExtras().getString("img")).into(img);
+
+    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_);
+
+        LoadActionBar();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         chatViewmodel = ViewModelProviders.of(this).get(chatViewmodel.class);
-        name = findViewById(R.id.textView6);
-        img = findViewById(R.id.circleImageView2);
-        send = findViewById(R.id.Send_msg);
-        name.setText(getIntent().getExtras().getString("name"));
-        Glide.with(getApplicationContext()).load(getIntent().getExtras().getString("img")).into(img);
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+
+        send = findViewById(R.id.send);
+        _txtmsg = findViewById(R.id.msg);
+        recyclerView3 = findViewById(R.id.recyclerView3);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView3.setLayoutManager(linearLayoutManager);
 
         Log.e("mailto:", getIntent().getExtras().getString("mail", "-1"));
         send.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +98,8 @@ public class Chat_Activity extends AppCompatActivity {
 
                 Message message = new Message();
                 message.setTime(String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())));
-                message.setTxt("dsf");
+                message.setTxt(_txtmsg.getText().toString());
+                message.setImg(sharedPreferences.getString("img", "-1").toString());
                 message.setType("0");
                 message.setSend(sharedPreferences.getString("Gmail", "-1"));
 
@@ -73,6 +111,8 @@ public class Chat_Activity extends AppCompatActivity {
                                         Remove_delemeter(getIntent().getExtras().getString("mail", "-1")),
                                 message);
 
+                _txtmsg.setText("");
+
 
             }
         });
@@ -81,7 +121,10 @@ public class Chat_Activity extends AppCompatActivity {
                 .observe(this, new Observer<ArrayList<Message>>() {
                     @Override
                     public void onChanged(ArrayList<Message> messages) {
-                        Log.e("msg", messages.get(0).getTxt().toString());
+
+                        adapter = new Adapter(messages, getApplication());
+                        recyclerView3.setAdapter(adapter);
+
 
                     }
                 });

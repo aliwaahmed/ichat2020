@@ -216,7 +216,6 @@ public class AddNewUser {
 
         jsonObject.setImg(img);
 
-        jsonObject.setHashkey(sharedPreferences.getString("hash", "-1"));
 
 
         DatabaseReference myRef = database.getReference("active_user");
@@ -283,6 +282,28 @@ public class AddNewUser {
 
     }
 
+    /**
+     * @param mail
+     * @param message
+     */
+    public void Send_msg_while_offline(String mail, Message message)
+    {
+        DatabaseReference myRef;
+
+        myRef = database.getReference("chats")
+                .child(Generate_Child(mail)).push();
+        SharedPreferences sharedPreferences;
+
+        sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+        DatabaseReference myRef1 = database.getReference("users").
+                child(mail
+                ).child("chats").child(mail);
+        myRef1.setValue(message);
+
+        myRef.setValue(message);
+
+    }
+
     public String Generate_Child(String mail) {
         SharedPreferences sharedPreferences;
         sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -333,4 +354,13 @@ public class AddNewUser {
     }
 
 
+    /**
+     *
+     * @param mail
+     */
+    public void removectiveuser(String mail) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("active_user");
+        myRef.child(mail).removeValue();
+    }
 }
