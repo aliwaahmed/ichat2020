@@ -61,9 +61,7 @@ public class notification extends Service implements View.OnClickListener{
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-
+    public int onStartCommand(Intent intent, int flags, int startId) {
 
         //getting the widget layout from xml using layout inflater
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.layout_floating_widget, null);
@@ -129,7 +127,14 @@ public class notification extends Service implements View.OnClickListener{
                 return false;
             }
         });
+
+
+
+        return START_STICKY;
+
     }
+
+
 
     @Override
     public void onDestroy() {

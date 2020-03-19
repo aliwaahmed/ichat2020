@@ -54,7 +54,7 @@ public class chatViewmodel extends ViewModel {
         DatabaseReference online_user = firebaseDatabase.getReference("chats")
                 .child(AddNewUser.getInstance(context1).Generate_Child(mail));
 
-        online_user.addChildEventListener(new ChildEventListener() {
+        online_user.orderByValue().limitToLast(100).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 

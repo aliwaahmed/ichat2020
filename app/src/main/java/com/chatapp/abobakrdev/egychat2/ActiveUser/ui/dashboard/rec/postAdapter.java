@@ -40,46 +40,48 @@ public class postAdapter extends RecyclerView.Adapter<Viewholder> {
     @Override
     public void onBindViewHolder(@NonNull final Viewholder holder, final int position) {
 
-        Glide.with(context).load(arrayList.get(position).getImg()).into(holder.circleImageView);
 
-        holder.name.setText(arrayList.get(position).getName());
-        holder.txt.setText(arrayList.get(position).getText());
-        holder.time.setText(arrayList.get(position).getDate());
-        holder.materialCardView.setBackgroundColor(Color.parseColor(arrayList.get(position).getColor()));
+            Glide.with(context).load(arrayList.get(position).getImg()).into(holder.circleImageView);
 
-        holder.like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.like.setColorFilter(ContextCompat.getColor(context,
-                        R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
+            holder.name.setText(arrayList.get(position).getName());
+            holder.txt.setText(arrayList.get(position).getText());
+            holder.time.setText(arrayList.get(position).getDate());
+            holder.materialCardView.setBackgroundColor(Color.parseColor(arrayList.get(position).getColor()));
 
-            }
-        });
+            holder.like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.like.setColorFilter(ContextCompat.getColor(context,
+                            R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
 
-
-        holder.dislike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.dislike.setColorFilter(ContextCompat.getColor(context,
-                        R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
-            }
-        });
-        holder.Share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "$" + arrayList.get(position).getName() + "\n"
-                        + arrayList.get(position).getText());
-                context.startActivity(Intent.createChooser(sharingIntent, "Share "));
+                }
+            });
 
 
-            }
-        });
+            holder.dislike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    holder.dislike.setColorFilter(ContextCompat.getColor(context,
+                            R.color.colorAccent), android.graphics.PorterDuff.Mode.MULTIPLY);
+                }
+            });
+            holder.Share.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "$" + arrayList.get(position).getName() + "\n"
+                            + arrayList.get(position).getText());
+                    context.startActivity(Intent.createChooser(sharingIntent, "Share "));
 
 
-    }
+                }
+            });
+        }
+
+
+
 
     @Override
     public int getItemCount() {

@@ -45,6 +45,8 @@ public class AddNewUser {
     public static AddNewUser getInstance(Context context1) {
 
         if (addNewUser == null) {
+            database.setPersistenceEnabled(true);
+
             addNewUser = new AddNewUser();
             context = context1;
             map = new HashMap<>();
@@ -221,6 +223,8 @@ public class AddNewUser {
         myRef.child(Remove_delemeter(mail))
                 .setValue(jsonObject);
 
+        myRef.keepSynced(true);
+
     }
 
 
@@ -234,6 +238,7 @@ public class AddNewUser {
         DatabaseReference refmail = myRef.child(Remove_delemeter(mail)).getRef();
 
         refmail.child("about").setValue(data);
+        refmail.keepSynced(true);
 
     }
 
@@ -258,6 +263,8 @@ public class AddNewUser {
         post.setMail(mail);
         post.setText(txt);
         post.setDate(date);
+        myRef.keepSynced(true);
+
         myRef.setValue(post);
 
 
@@ -277,6 +284,7 @@ public class AddNewUser {
 
 
         myRef.setValue(message);
+        myRef.keepSynced(true);
 
 
     }

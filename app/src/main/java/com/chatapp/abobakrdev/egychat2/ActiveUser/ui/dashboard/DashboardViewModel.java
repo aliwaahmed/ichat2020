@@ -55,15 +55,15 @@ public class DashboardViewModel extends ViewModel {
         if (myRef1 != null) {
 
 
-            myRef1.addChildEventListener(new ChildEventListener() {
+            myRef1.orderByValue().limitToLast(100).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                    post = dataSnapshot.getValue(Post.class);
+                    if(dataSnapshot.exists()) {
 
-
-                    arrayList.add(post);
-
+                        post = dataSnapshot.getValue(Post.class);
+                        arrayList.add(post);
+                    }
 
                     list.postValue(arrayList);
 
@@ -90,6 +90,9 @@ public class DashboardViewModel extends ViewModel {
 
                 }
             });
+
+
+
         }
 
 

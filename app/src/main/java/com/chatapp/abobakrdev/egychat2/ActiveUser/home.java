@@ -53,13 +53,13 @@ public class home extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
-
-        }
-        startService(new Intent(this, notification.class));
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+//            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+//                    Uri.parse("package:" + getPackageName()));
+//            startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
+//
+//        }
+//        startService(new Intent(this, notification.class));
 
 
 

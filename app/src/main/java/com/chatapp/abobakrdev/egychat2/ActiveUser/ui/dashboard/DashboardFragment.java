@@ -65,7 +65,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private ProgressBar progressBar;
     private MediaPlayer mediaPlayer;
     InterstitialAd mInterstitialAd;
-
+   postAdapter postAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -188,14 +188,19 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         });
 
 
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+
+
         dashboardViewModel.getlist().observe(getActivity(), new Observer<ArrayList<Post>>() {
             @Override
             public void onChanged(ArrayList<Post> posts) {
 
-
-                    progressBar.setVisibility(View.INVISIBLE);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    recyclerView.setAdapter(new postAdapter(getContext(), posts));
+                progressBar.setVisibility(View.GONE);
+                if(posts.size()>0) {
+                    postAdapter = new postAdapter(getContext(), posts);
+                    recyclerView.setAdapter(postAdapter);
+                }
 
 
             }
