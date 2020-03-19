@@ -2,8 +2,10 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +44,7 @@ public class home extends AppCompatActivity {
     private String img;
     private AdView mAdView;
     private  String delegate = "hh:mm aaa";
+    private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +53,17 @@ public class home extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
-        Intent serviceIntent = new Intent(this, notification.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(serviceIntent);
-        } else {
-            startService(serviceIntent);
         }
+        startService(new Intent(this, notification.class));
+
+
+
+
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -96,13 +102,13 @@ public class home extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
+       // AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
+      //  AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
 
     }
 
