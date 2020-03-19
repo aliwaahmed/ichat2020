@@ -179,7 +179,6 @@ public class AddNewUser {
         DatabaseReference refmail = myRef.child(Remove_delemeter(mail)).getRef();
         DatabaseReference imges = refmail.child("images").getRef();
         imges.child(img_Zero_One).setValue(path);
-
     }
 
     public String Remove_delemeter(String mail) {

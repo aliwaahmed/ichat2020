@@ -36,6 +36,7 @@ import static com.chatapp.abobakrdev.egychat2.foregroundservices.App.CHANNEL_ID;
 public class notification extends Service {
     SharedPreferences sharedPreferences;
     NotificationCompat.Builder builder;
+    NotificationCompat.Builder builder1;
 
     @Override
     public void onCreate() {
@@ -49,13 +50,39 @@ public class notification extends Service {
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Example Service")
-                .setSmallIcon(R.drawable.ic_arrow_drop_down_black_24dp)
-                .setContentIntent(pendingIntent)
-                .build();
 
-        startForeground(1, notification);
+        builder1 = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.my_msgs_background)
+                .setContentTitle("My notification")
+                .setContentText("Much longer text that cannot fit one line...")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Much longer text that cannot fit one line..."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "sd";
+            String description = "dsasd";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+            startForeground(1, builder1.build());
+        } else {
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+            // notificationId is a unique int for each notification that you must define
+            startForeground(1, builder1.build());
+        }
+
+
+        sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+
+
+        get_online_User(sharedPreferences.getString("mail", "-1"));
+
 
         //do heavy work on a background thread
         //stopSelf();
@@ -122,6 +149,7 @@ public class notification extends Service {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         createNotificationChannel("a", "da");
+
     }
 
     private void createNotificationChannel(String channel_name, String channel_description) {
