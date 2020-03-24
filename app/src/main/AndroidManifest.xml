@@ -21,7 +21,7 @@
 
             />
         <activity android:name=".Visit_profile_Activity" />
-        <activity android:name=".CompleteInfo.Completeinfo" />
+        <activity android:name=".login.CompleteInfo.Completeinfo" />
         <activity android:name=".ActiveUser.ui.Setting.Viewimage" />
         <activity android:name=".ActiveUser.home" />
         <activity
@@ -38,9 +38,7 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />
-        <service android:name=".foregroundservices.notification">
 
-        </service>
     </application>
 
 </manifest>

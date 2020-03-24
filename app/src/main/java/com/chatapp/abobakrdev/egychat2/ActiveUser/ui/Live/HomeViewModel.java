@@ -1,20 +1,15 @@
-package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home;
+package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live;
 
-import android.content.Context;
-import android.provider.ContactsContract;
 import android.util.Log;
 
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model.model;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.model.model;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +21,7 @@ public class HomeViewModel extends ViewModel {
 
 
     private MutableLiveData<HashMap<String, model>> mText;
-    private com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model.model model;
+    private com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.model.model model;
     private HashMap<String, model> models;
 
     public LiveData<HashMap<String, model>> HomeViewModel() {

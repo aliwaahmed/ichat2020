@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model.model;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -14,7 +13,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.dashboard;
+package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,14 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.dashboard.model.Post;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.dashboard.rec.postAdapter;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.model.Post;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.rec.postAdapter;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
-import com.chatapp.abobakrdev.egychat2.CompleteInfo.Completeinfo;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -29,13 +25,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -62,7 +54,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private SwipeRefreshLayout swip;
-    private ProgressBar progressBar;
     private MediaPlayer mediaPlayer;
     InterstitialAd mInterstitialAd;
    postAdapter postAdapter;
@@ -75,7 +66,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         mediaPlayer = MediaPlayer.create(getContext(), R.raw.postsound);
 
         final View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        progressBar = root.findViewById(R.id.progressBar);
         swip = root.findViewById(R.id.swap);
         getActivity().getWindow().setSoftInputMode(SOFT_INPUT_ADJUST_PAN);
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -92,7 +82,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         floatingActionButton = root.findViewById(R.id.floatingActionButton);
 
         color = getActivity().getResources().getString(R.string.item1);
-        progressBar.setVisibility(View.VISIBLE);
 
 
         imageView6.setOnClickListener(new View.OnClickListener() {
@@ -196,8 +185,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onChanged(ArrayList<Post> posts) {
 
-                progressBar.setVisibility(View.GONE);
                 if(posts.size()>0) {
+                    recyclerView.setBackgroundColor(Color.WHITE);
                     postAdapter = new postAdapter(getContext(), posts);
                     recyclerView.setAdapter(postAdapter);
                 }

@@ -1,4 +1,4 @@
-package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model;
+package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.model;
 
 public class model {
     private String name;

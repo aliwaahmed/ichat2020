@@ -1,4 +1,4 @@
-package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.dashboard.model;
+package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.model;
 
 public class Post {
     private String text;

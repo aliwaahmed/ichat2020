@@ -5,31 +5,13 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.dashboard.model.Post;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model.model;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.model.Post;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.model.model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-import androidx.annotation.NonNull;
 
 public class AddNewUser {
 

@@ -1,11 +1,10 @@
-package com.chatapp.abobakrdev.egychat2.CompleteInfo;
+package com.chatapp.abobakrdev.egychat2.login.CompleteInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
@@ -19,7 +18,6 @@ import com.chatapp.abobakrdev.egychat2.ActiveUser.home;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.R;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Completeinfo extends AppCompatActivity {

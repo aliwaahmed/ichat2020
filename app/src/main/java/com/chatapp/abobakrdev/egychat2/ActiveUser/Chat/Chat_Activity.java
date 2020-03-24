@@ -2,7 +2,6 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser.Chat;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +17,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,13 +24,10 @@ import com.bumptech.glide.Glide;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.ChatAdapter.Adapter;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.mViewmodel.chatViewmodel;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.HomeViewModel;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
@@ -94,6 +89,9 @@ public class Chat_Activity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!_txtmsg.getText().toString().isEmpty()){
+
+
                 String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
 
                 Message message = new Message();
@@ -112,7 +110,13 @@ public class Chat_Activity extends AppCompatActivity {
                                 message);
 
                 _txtmsg.setText("");
-
+                }
+                else
+                {
+                    Snackbar.make(v,"Enter Message", Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(getResources().getColor(R.color.appColor))
+                            .show();
+                }
 
             }
         });

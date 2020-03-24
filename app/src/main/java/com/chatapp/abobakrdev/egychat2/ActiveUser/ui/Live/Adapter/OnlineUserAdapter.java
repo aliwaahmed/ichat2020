@@ -1,4 +1,4 @@
-package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.Adapter;
+package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Setting.Viewimage;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.home.model.model;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.model.model;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.Chat_Activity;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.ads.AdRequest;

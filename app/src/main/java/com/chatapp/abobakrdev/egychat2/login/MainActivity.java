@@ -2,11 +2,9 @@ package com.chatapp.abobakrdev.egychat2.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,11 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chatapp.abobakrdev.egychat2.ActiveUser.home;
-import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
-import com.chatapp.abobakrdev.egychat2.CompleteInfo.Completeinfo;
-import com.chatapp.abobakrdev.egychat2.DarkMode.InitApplication;
+import com.chatapp.abobakrdev.egychat2.login.CompleteInfo.Completeinfo;
 import com.chatapp.abobakrdev.egychat2.R;
-import com.chatapp.abobakrdev.egychat2.foregroundservices.notification;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -60,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         String img = sharedPreferences.getString("img", "-1");
 
         if (!mail.equals("-1")) {
+
             Intent intent = new Intent(this, home.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

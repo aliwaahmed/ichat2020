@@ -36,15 +36,31 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Setting.photoadapter.PhotoAdapter;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
 import com.chatapp.abobakrdev.egychat2.DarkMode.InitApplication;
 import com.chatapp.abobakrdev.egychat2.R;
+import com.chatapp.abobakrdev.egychat2.login.MainActivity;
 import com.chatapp.abobakrdev.egychat2.login.Splash_Activity;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -58,7 +74,7 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-public class SettingFragment extends Fragment {
+public class SettingFragment extends Fragment  implements GoogleApiClient.OnConnectionFailedListener{
 
 
     private SharedPreferences sharedPreferences;
@@ -71,7 +87,8 @@ public class SettingFragment extends Fragment {
     private String phone, Gmail;
     private ImageView imageView;
     private TextView gander, date, _phone, _mail, _my_name;
-    private ImageView _add_img, Add0, Add1, _profile_recycler_img0, _profile_recycler_img1, edit_statue, close_statue;
+    private ImageView _add_img,
+            _profile_recycler_img0, _profile_recycler_img1, edit_statue, close_statue;
     private LinearLayout update_statue;
     final private int GET_GALLERY_CODE = 111;
     final private int GET_GALLERY_CODE0 = 110;
@@ -83,50 +100,68 @@ public class SettingFragment extends Fragment {
     private SharedPreferences.Editor sharedPreferences1;
     private ProgressDialog progressDialog;
     private EditText about;
-    private Button update;
+    private Button update,logoutBtn;
     private TextView text_about;
 
+    private GoogleApiClient googleApiClient;
+    private GoogleSignInOptions gso;
+    private RecyclerView recyclerView ;
+
+    private PhotoAdapter photoAdapter ;
+    private GridLayoutManager gridLayoutManager ;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         final View root = inflater.inflate(R.layout.my_profile_layout, container, false);
-        Switch switchCompat =root.findViewById(R.id._switch);
 
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
-            switchCompat.setChecked(true);
+        recyclerView = root.findViewById(R.id.listimg);
+        gridLayoutManager =new GridLayoutManager(getContext(),3);
+        photoAdapter =new PhotoAdapter();
 
-        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-
-                    InitApplication.getInstance(getContext()).setIsNightModeEnabled(true);
-                    if (InitApplication.getInstance(getContext()).isNightModeEnabled()) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-                    }
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(photoAdapter);
 
 
-                } else {
-                    InitApplication.getInstance(getContext()).setIsNightModeEnabled(false);
 
-                    if (InitApplication.getInstance(getContext()).isNightModeEnabled()) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//        Switch switchCompat =root.findViewById(R.id._switch);
+//
+//        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES)
+//            switchCompat.setChecked(true);
+//
+//        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//
+//                    InitApplication.getInstance(getContext()).setIsNightModeEnabled(true);
+//                    if (InitApplication.getInstance(getContext()).isNightModeEnabled()) {
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//
+//                    } else {
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//
+//                    }
+//
+//
+//                } else {
+//                    InitApplication.getInstance(getContext()).setIsNightModeEnabled(false);
+//
+//                    if (InitApplication.getInstance(getContext()).isNightModeEnabled()) {
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//
+//                    } else {
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//
+//                    }
+//
+//                }
+//
+//
+//            }
+//        });
 
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-                    }
-
-                }
-
-
-            }
-        });
+        logoutBtn=root.findViewById(R.id.logoutBtn);
 
         gander = root.findViewById(R.id._gender);
         date = root.findViewById(R.id._date);
@@ -139,8 +174,8 @@ public class SettingFragment extends Fragment {
         text_about = root.findViewById(R.id.text_about);
         _profile_recycler_img0 = root.findViewById(R.id._profile_recycler_img0);
         _profile_recycler_img1 = root.findViewById(R.id._profile_recycler_img1);
-        Add0 = root.findViewById(R.id.Add0);
-        Add1 = root.findViewById(R.id.Add1);
+//        Add0 = root.findViewById(R.id.Add0);
+//        Add1 = root.findViewById(R.id.Add1);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Upload New Image");
         progressDialog.setCancelable(false);
@@ -165,18 +200,18 @@ public class SettingFragment extends Fragment {
         phone = sharedPreferences.getString("phone", "-1");
         mStorageRef = FirebaseStorage.getInstance().getReference();
         Log.e("age", age);
-        _my_name.setText(name);
+        _mail.setText(name);
         date.setText(age);
         gander.setText(gender);
         _phone.setText(phone);
-        _mail.setText(Gmail);
+        _my_name.setText(Gmail);
         text_about.setText(sharedPreferences.getString("about", "Enter Data About U "));
 
         Glide.with(getActivity()).load(img).into(imageView);
-        Glide.with(getActivity()).load(sharedPreferences.getString("img0", "-1")).into(_profile_recycler_img0);
-
-        Glide.with(getActivity()).load(sharedPreferences.getString("img1", "-1")).into(_profile_recycler_img1);
-
+//        Glide.with(getActivity()).load(sharedPreferences.getString("img0", "-1")).into(_profile_recycler_img0);
+//
+//        Glide.with(getActivity()).load(sharedPreferences.getString("img1", "-1")).into(_profile_recycler_img1);
+//
 
         edit_statue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,33 +274,33 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        _profile_recycler_img0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getContext(), Viewimage.class);
-                intent.putExtra("path", sharedPreferences.getString("img0", "-1"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
-
-            }
-        });
-
-        _profile_recycler_img1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getContext(), Viewimage.class);
-                intent.putExtra("path", sharedPreferences.getString("img1", "-1"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
-
-            }
-        });
+//        _profile_recycler_img0.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(getContext(), Viewimage.class);
+//                intent.putExtra("path", sharedPreferences.getString("img0", "-1"));
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                getActivity().startActivity(intent);
+//                getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+//
+//
+//            }
+//        });
+//
+//        _profile_recycler_img1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(getContext(), Viewimage.class);
+//                intent.putExtra("path", sharedPreferences.getString("img1", "-1"));
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                getActivity().startActivity(intent);
+//                getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+//
+//
+//            }
+//        });
 
 
         _add_img.setOnClickListener(new View.OnClickListener() {
@@ -290,51 +325,126 @@ public class SettingFragment extends Fragment {
         });
 
 
-        Add0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE);
+//        Add0.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+//                        Manifest.permission.READ_EXTERNAL_STORAGE);
+//
+//                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+//                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                    intent.setType("image/*");
+//                    startActivityForResult(intent, GET_GALLERY_CODE0);
+//
+//                } else {
+//                    ActivityCompat.requestPermissions(getActivity(),
+//                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+//                            2000);
+//                }
+//
+//            }
+//        });
+//
+//
+//        Add1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
+//                        Manifest.permission.READ_EXTERNAL_STORAGE);
+//
+//                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+//                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                    intent.setType("image/*");
+//                    startActivityForResult(intent, GET_GALLERY_CODE1);
+//
+//                } else {
+//                    ActivityCompat.requestPermissions(getActivity(),
+//                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+//                            2000);
+//                }
+//
+//
+//            }
+//        });
 
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("image/*");
-                    startActivityForResult(intent, GET_GALLERY_CODE0);
 
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            2000);
-                }
-
-            }
-        });
-
-
-        Add1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int permissionCheck = ContextCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE);
-
-                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                    intent.setType("image/*");
-                    startActivityForResult(intent, GET_GALLERY_CODE1);
-
-                } else {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            2000);
-                }
+//        logoutBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+//                        new ResultCallback<Status>() {
+//                            @Override
+//                            public void onResult(Status status) {
+//                                if (status.isSuccess()){
+//                                    gotoMainActivity();
+//                                }else{
+//                                    Toast.makeText(getContext(),"Session not close",Toast.LENGTH_LONG).show();
+//                                }
+//                            }
+//                        });
+//            }
+//        });
 
 
-            }
-        });
+
+
+
+
 
         return root;
     }
 
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+//        gso =  new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build();
+//        googleApiClient=new GoogleApiClient.Builder(getContext())
+//                .enableAutoManage(getActivity(),this)
+//                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+//                .build();
+
+    }
+
+
+    private void gotoMainActivity(){
+
+
+
+
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+        currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    SharedPreferences pref = getContext().getSharedPreferences("login", 0); // 0 - for private mode
+                    SharedPreferences.Editor editor = pref.edit();
+
+                    editor.putString("mail", "-1"); // Storing boolean - true/false
+
+                    editor.commit(); // commit changes
+                    Intent intent=new Intent(getContext(), Splash_Activity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("TAG","Ocurrio un error durante la eliminación del usuario", e);
+            }
+        });
+
+
+
+
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
@@ -438,7 +548,8 @@ public class SettingFragment extends Fragment {
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                        double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
+                        double progress = (100.0 * taskSnapshot.getBytesTransferred()
+                                / taskSnapshot.getTotalByteCount());
 
                         progressDialog.setProgress((int) progress);
                         Log.e("pro", String.valueOf(progress));
@@ -500,4 +611,39 @@ public class SettingFragment extends Fragment {
     }
 
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+//        googleApiClient.stopAutoManage(getActivity());
+//        googleApiClient.disconnect();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+//        googleApiClient.stopAutoManage(getActivity());
+//        googleApiClient.disconnect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        googleApiClient.stopAutoManage(getActivity());
+//        googleApiClient.disconnect();
+    }
 }

@@ -1,4 +1,4 @@
-package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.dashboard.rec;
+package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.rec;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.dashboard.model.Post;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.model.Post;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
