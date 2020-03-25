@@ -14,16 +14,23 @@
         <item name="android:windowActionBar">true</item>
         <item name="android:windowFullscreen">true</item>
 
-<!--        <item name="android:statusBarColor">@color/gray</item>-->
+        <!--        <item name="android:statusBarColor">@color/gray</item>-->
 
-<!--        &lt;!&ndash;        <item name="android:windowTranslucentStatus">true</item>&ndash;&gt;-->
+        <!--        &lt;!&ndash;        <item name="android:windowTranslucentStatus">true</item>&ndash;&gt;-->
 
     </style>
 
 
+    <style name="Dialog.Alert" parent="Theme.AppCompat.DayNight.Dialog.Alert" />
 
-    <style name="Dialog.Alert" parent="Theme.AppCompat.DayNight.Dialog.Alert"/>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
