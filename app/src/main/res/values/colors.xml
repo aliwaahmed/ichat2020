@@ -6,7 +6,6 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="appColor">#4527A0</color>
-    <color name="yellow">#FFCA28</color>
     <color name="white">#fff</color>
     <color name="white_gray">#D1D1D1</color>
     <color name="purple">#3C0B3A</color>
@@ -16,9 +15,6 @@
     <color name="navColor">#ED862784</color>
     <color name="follow">#D81B60</color>
     <color name="gray">#9E9E9E</color>
-
-    <color name="white_blue">#37474f</color>
-    <color name="dark_blue">#263238</color>
 
 
     <color name="transPurple">#6B3C0B3A</color>
@@ -42,5 +38,16 @@
     <color name="iteam3">#FFEAED</color>
     <color name="gradient">#9b0493</color>
     <color name="gradient2">#38068f</color>
+
+
+
+
+    <color name="yellow">#FFCA28</color>
+    <color name="white_blue">#37474f</color>
+    <color name="dark_blue">#263238</color>
+    <color name="mainbg">#151F2A</color>
+    <color name="toolbar">#192532</color>
+    <color name="trans">#A8000000</color>
+
 
 </resources>
