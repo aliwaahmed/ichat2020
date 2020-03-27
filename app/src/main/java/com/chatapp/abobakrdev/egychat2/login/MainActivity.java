@@ -2,6 +2,7 @@ package com.chatapp.abobakrdev.egychat2.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.SharedPreferencesKt;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -194,6 +195,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Log.d("TAG", "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        SharedPreferences.Editor sharedPreferences = getSharedPreferences("credential",MODE_PRIVATE).edit();
+        sharedPreferences.putString("credential",acct.getIdToken());
+        sharedPreferences.apply();
+        sharedPreferences.commit();
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -254,6 +259,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         this.finish();
     }
 
-    private class Context {
-    }
+
 }

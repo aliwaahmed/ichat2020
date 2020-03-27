@@ -1,5 +1,6 @@
 package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,7 +16,7 @@ import android.widget.ImageView;
 
 import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.model.Post;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.rec.postAdapter;
-import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
+import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -35,12 +36,11 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
 
 
-public class DashboardFragment extends Fragment implements View.OnClickListener {
+public class DashboardFragment extends Fragment implements View.OnClickListener{
 
     private DashboardViewModel dashboardViewModel;
     private FloatingActionButton floatingActionButton;
@@ -53,20 +53,28 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
     private String color;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
-    private SwipeRefreshLayout swip;
     private MediaPlayer mediaPlayer;
     InterstitialAd mInterstitialAd;
-   postAdapter postAdapter;
+    postAdapter postAdapter;
+    private ProgressDialog progressDialog;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        final View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+
+        progressDialog =new ProgressDialog(getContext());
+
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("loading");
+
+
         sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         dashboardViewModel =
                 ViewModelProviders.of(this).get(DashboardViewModel.class);
         mediaPlayer = MediaPlayer.create(getContext(), R.raw.postsound);
 
-        final View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-        swip = root.findViewById(R.id.swap);
         getActivity().getWindow().setSoftInputMode(SOFT_INPUT_ADJUST_PAN);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView = root.findViewById(R.id.recyclerView2);
@@ -113,26 +121,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         });
 
 
-        swip.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                dashboardViewModel.getlist();
-                dashboardViewModel.getlist().observe(getActivity(), new Observer<ArrayList<Post>>() {
-                    @Override
-                    public void onChanged(ArrayList<Post> posts) {
-
-
-                        recyclerView.setLayoutManager(linearLayoutManager);
-                        recyclerView.setAdapter(new postAdapter(getContext(), posts));
-                        if (posts.size() > 0) {
-                            swip.setRefreshing(false);
-                        }
-
-                    }
-                });
-
-            }
-        });
 
         _POST.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +131,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                     Log.e("rw", String.valueOf(Month));
                     Log.e("rw", String.valueOf(Day));
                     String delegate = "hh:mm aaa";
-                    AddNewUser.getInstance(getContext()).add_post(
+                    FirebaseOperation.getInstance(getContext()).add_post(
                             sharedPreferences.getString("name", "-1"),
                             sharedPreferences.getString("email", "-1"),
                             txt.getText().toString(),
@@ -158,10 +146,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
 
 
                     mediaPlayer.start();
-                    Snackbar.make(root, "Post Add ", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), "Post Add ", Snackbar.LENGTH_LONG).show();
 
-                } else
+                } else {
                     txt.setError(getString(R.string.EnterPost));
+                }
 
             }
         });
@@ -170,6 +159,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 mAdView.loadAd(adRequest);
 
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -184,12 +175,20 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         dashboardViewModel.getlist().observe(getActivity(), new Observer<ArrayList<Post>>() {
             @Override
             public void onChanged(ArrayList<Post> posts) {
+                if(progressDialog.isShowing())
+                {
+                    progressDialog.dismiss();
+                }
 
                 if(posts.size()>0) {
+
                     recyclerView.setBackgroundColor(Color.WHITE);
                     postAdapter = new postAdapter(getContext(), posts);
                     recyclerView.setAdapter(postAdapter);
                 }
+
+
+
 
 
             }
@@ -198,7 +197,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         mInterstitialAd = new InterstitialAd(getContext());
 
         // set the ad unit ID
-        mInterstitialAd.setAdUnitId("ca-app-pub-0664570763252260/1769900428");
+        mInterstitialAd.setAdUnitId("ca-app-pub-9568503552755438/9182253972");
 
         AdRequest adRequest = new AdRequest.Builder().build();
 
@@ -210,8 +209,13 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
                 mInterstitialAd.show();
             }
         });
+
+
+
         return root;
     }
+
+
 
     @Override
     public void onClick(View v) {
@@ -222,4 +226,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener 
         }
 
     }
+
+
 }

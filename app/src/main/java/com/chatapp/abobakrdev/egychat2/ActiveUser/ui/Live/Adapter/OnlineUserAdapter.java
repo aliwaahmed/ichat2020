@@ -44,14 +44,14 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<viewholder> implemen
         keys = models.keySet().toArray();
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+        mRewardedVideoAd.loadAd("ca-app-pub-9568503552755438/4943626068",
                 new AdRequest.Builder().build());
     }
 
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new viewholder(LayoutInflater.from(context).inflate(R.layout.activeiteam, parent, false));
+        return new viewholder(LayoutInflater.from(context).inflate(R.layout.active_user_iteam, parent, false));
     }
 
     @Override
@@ -119,38 +119,32 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<viewholder> implemen
 
     @Override
     public void onRewardedVideoAdClosed() {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+        mRewardedVideoAd.loadAd("ca-app-pub-9568503552755438/4943626068",
                 new AdRequest.Builder().build());
-        Toast.makeText(context, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int errorCode) {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+        mRewardedVideoAd.loadAd("ca-app-pub-9568503552755438/4943626068",
                 new AdRequest.Builder().build());
-        Toast.makeText(context, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdLoaded() {
-        Toast.makeText(context, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdOpened() {
-        Toast.makeText(context, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoStarted() {
-        Toast.makeText(context, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoCompleted() {
-        mRewardedVideoAd.loadAd("ca-app-pub-3940256099942544/5224354917",
+        mRewardedVideoAd.loadAd("ca-app-pub-9568503552755438/4943626068",
                 new AdRequest.Builder().build());
-        Toast.makeText(context, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show();
     }
 }
 

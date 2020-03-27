@@ -46,15 +46,17 @@ public class HomeViewModel extends ViewModel {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                Log.e("data", dataSnapshot.getKey().toString());
-                model = dataSnapshot.getValue(model.class);
-                Log.e("name", model.getName());
-                Log.e("mail", model.getMail());
-                Log.e("gender", model.getGender());
-                Log.e("img", model.getImg());
-                Log.e("time", model.getTime_enter());
-                models.put(model.getMail().toString(), model);
-                mText.postValue(models);
+                if(dataSnapshot.exists()) {
+                    Log.e("data", dataSnapshot.getKey().toString());
+                    model = dataSnapshot.getValue(model.class);
+                    Log.e("name", model.getName());
+                    Log.e("mail", model.getMail());
+                    Log.e("gender", model.getGender());
+                    Log.e("img", model.getImg());
+                    Log.e("time", model.getTime_enter());
+                    models.put(model.getMail().toString(), model);
+                    mText.postValue(models);
+                }
 
             }
 

@@ -2,22 +2,16 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 
-import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
-import com.chatapp.abobakrdev.egychat2.DarkMode.InitApplication;
+import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,11 +19,8 @@ import java.util.Locale;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class home extends AppCompatActivity {
@@ -75,6 +66,8 @@ public class home extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
+
+
         name = sharedPreferences.getString("name", "-1");
         mail = sharedPreferences.getString("mail", "-1");
         age = sharedPreferences.getString("age", "-1");
@@ -85,7 +78,7 @@ public class home extends AppCompatActivity {
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
 
-        AddNewUser.getInstance(getApplicationContext()).
+        FirebaseOperation.getInstance(getApplicationContext()).
                 add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
                         String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())), name, img, gender);
 
@@ -98,33 +91,5 @@ public class home extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-       // AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-      //  AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        AddNewUser.getInstance(getApplicationContext()).removectiveuser(sharedPreferences.getString("mail","-1"));
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        AddNewUser.getInstance(getApplicationContext()).
-                add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
-                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())), name, img, gender);
-
-
-    }
 }

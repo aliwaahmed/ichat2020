@@ -15,7 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.chatapp.abobakrdev.egychat2.ActiveUser.home;
-import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
+import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 
 import java.util.Calendar;
@@ -105,11 +105,22 @@ public class Completeinfo extends AppCompatActivity {
     {
         if(Phone.getText().toString().isEmpty())
         {
+
             Phone.setError("Enter Phone Number");
+        }
+        else if(Phone.getText().toString().length()<9)
+        {
+            Phone.setError("Enter Phone Number");
+
+        }
+        else if(date.getText().toString().isEmpty())
+        {
+            date.setError("Enter Phone Number");
+
         }
         else
         {
-            AddNewUser.getInstance(getApplicationContext()).add_user(name,mail,radioButton.getText().toString(), date.getText().toString(),
+            FirebaseOperation.getInstance(getApplicationContext()).add_user(name,mail,radioButton.getText().toString(), date.getText().toString(),
                 Phone.getText().toString(),img);
 
 

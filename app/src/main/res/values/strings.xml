@@ -8,7 +8,7 @@
     <string name="Female">Female</string>
     <string name="other">Other</string>
     <string name="Setting">Setting</string>
-    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_ad_unit_id">ca-app-pub-9568503552755438/3207535856</string>
     <string name="extended_fab_content_desc">a</string>
     <string name="extended_fab_label">a</string>
     <string name="timeline">Timeline</string>
@@ -146,4 +146,8 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_scrolling_activityadssdsad">ScrollingActivityadasd</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

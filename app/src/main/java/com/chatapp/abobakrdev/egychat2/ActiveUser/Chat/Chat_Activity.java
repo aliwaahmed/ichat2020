@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.ChatAdapter.Adapter;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.mViewmodel.chatViewmodel;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
-import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
+import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -57,7 +57,7 @@ public class Chat_Activity extends AppCompatActivity {
 
 
         name = findViewById(R.id.name);
-        img = findViewById(R.id.img);
+        img = findViewById(R.id.img3);
 
 
         name.setText(getIntent().getExtras().getString("name"));
@@ -104,8 +104,8 @@ public class Chat_Activity extends AppCompatActivity {
                 // message.setTimeStamp(timeStamp);
 
 
-                AddNewUser.getInstance(getApplicationContext()).
-                        SendMessage(AddNewUser.getInstance(getApplicationContext()).
+                FirebaseOperation.getInstance(getApplicationContext()).
+                        SendMessage(FirebaseOperation.getInstance(getApplicationContext()).
                                         Remove_delemeter(getIntent().getExtras().getString("mail", "-1")),
                                 message);
 
@@ -121,7 +121,7 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
-        chatViewmodel.HomeViewModel(AddNewUser.getInstance(getApplicationContext()).Remove_delemeter(getIntent().getExtras().getString("mail", "-2")), getApplicationContext())
+        chatViewmodel.HomeViewModel(FirebaseOperation.getInstance(getApplicationContext()).Remove_delemeter(getIntent().getExtras().getString("mail", "-2")), getApplicationContext())
                 .observe(this, new Observer<ArrayList<Message>>() {
                     @Override
                     public void onChanged(ArrayList<Message> messages) {

@@ -67,7 +67,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="1dp"
                     android:fontFamily="@font/ja"
-                    android:text="select date"
+                    android:hint="select date"
                     android:textColor="@color/appColor"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -113,12 +113,6 @@
                     android:fontFamily="@font/ja"
                     android:text="@string/Female" />
 
-                <RadioButton
-                    android:id="@+id/other"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/ja"
-                    android:text="@string/other" />
             </RadioGroup>
 
 

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
-import com.chatapp.abobakrdev.egychat2.AddNewUser.AddNewUser;
+import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,7 +50,7 @@ public class chatViewmodel extends ViewModel {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
         DatabaseReference online_user = firebaseDatabase.getReference("chats")
-                .child(AddNewUser.getInstance(context1).Generate_Child(mail));
+                .child(FirebaseOperation.getInstance(context1).Generate_Child(mail));
 
         online_user.orderByValue().limitToLast(100).addChildEventListener(new ChildEventListener() {
             @Override
