@@ -28,6 +28,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.model.model;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.chatapp.abobakrdev.egychat2.login.Splash_Activity;
@@ -372,17 +373,27 @@ public class SettingFragment extends Fragment {
 
                 firebaseAuth.signInWithCredential(credential);
 
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+                DatabaseReference myRef = database.getReference("active_user");
+                myRef.child(mail).removeValue();
+
 
                 currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+
+
+
+
                             SharedPreferences pref = getContext().getSharedPreferences("login", 0); // 0 - for private mode
                             SharedPreferences.Editor editor = pref.edit();
 
                             editor.putString("mail", "-1"); // Storing boolean - true/false
 
                             editor.commit(); // commit changes
+
                             Intent intent = new Intent(getContext(), Splash_Activity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             getContext().startActivity(intent);
@@ -600,7 +611,7 @@ public class SettingFragment extends Fragment {
 
                 Log.e("views", dataSnapshot.getValue().toString());
 
-                if(dataSnapshot.getKey().equals("views")) {
+                if (dataSnapshot.getKey().equals("views")) {
                     views.setText(dataSnapshot.getValue().toString());
                 }
 
@@ -612,7 +623,7 @@ public class SettingFragment extends Fragment {
 
 
                 Log.e("views", dataSnapshot.getValue().toString());
-                if(dataSnapshot.getKey().equals("views")) {
+                if (dataSnapshot.getKey().equals("views")) {
                     views.setText(dataSnapshot.getValue().toString());
                 }
 

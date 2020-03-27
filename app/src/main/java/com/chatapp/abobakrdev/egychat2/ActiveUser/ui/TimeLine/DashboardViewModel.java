@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,6 +36,16 @@ public class DashboardViewModel extends ViewModel {
         }
         return list;
     }
+    public LiveData<ArrayList<Post>> getlist1() {
+
+            list = new MutableLiveData<>();
+            arrayList = new ArrayList<>();
+            loaddata();
+
+
+        return list;
+    }
+
 
     private void loaddata() {
 
@@ -49,34 +60,17 @@ public class DashboardViewModel extends ViewModel {
         if (myRef1 != null) {
 
 
-            myRef1.orderByValue().limitToLast(100).addChildEventListener(new ChildEventListener() {
+
+            myRef1.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    if(dataSnapshot.exists()) {
-
-                        post = dataSnapshot.getValue(Post.class);
+                    for (DataSnapshot childSnapshot: dataSnapshot.getChildren()) {
+                        post = childSnapshot.getValue(Post.class);
                         arrayList.add(post);
+                        list.postValue(arrayList);
+
                     }
-
-                    list.postValue(arrayList);
-
-
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 }
 
                 @Override
@@ -84,8 +78,6 @@ public class DashboardViewModel extends ViewModel {
 
                 }
             });
-
-
 
         }
 

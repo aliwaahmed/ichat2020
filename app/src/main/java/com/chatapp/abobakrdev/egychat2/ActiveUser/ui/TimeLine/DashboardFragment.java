@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -36,11 +38,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN;
 
 
-public class DashboardFragment extends Fragment implements View.OnClickListener{
+public class DashboardFragment extends Fragment implements View.OnClickListener {
 
     private DashboardViewModel dashboardViewModel;
     private FloatingActionButton floatingActionButton;
@@ -56,18 +59,11 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
     private MediaPlayer mediaPlayer;
     InterstitialAd mInterstitialAd;
     postAdapter postAdapter;
-    private ProgressDialog progressDialog;
 
-
+    private SwipeRefreshLayout swipeRefreshLayout = null;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
-
-        progressDialog =new ProgressDialog(getContext());
-
-        progressDialog.show();
-        progressDialog.setCancelable(false);
-        progressDialog.setMessage("loading");
 
 
         sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -84,6 +80,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         imageView7 = root.findViewById(R.id.imageView7);
         imageView8 = root.findViewById(R.id.imageView8);
         mAdView = root.findViewById(R.id.adView);
+        swipeRefreshLayout=root.findViewById(R.id.swip);
         adRequest = new AdRequest.Builder().build();
         final BottomSheetBehavior mBottomSheetBehavior = BottomSheetBehavior.from(root.findViewById(R.id.bottom_sheet));
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -121,7 +118,6 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         });
 
 
-
         _POST.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +129,7 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
                     String delegate = "hh:mm aaa";
                     FirebaseOperation.getInstance(getContext()).add_post(
                             sharedPreferences.getString("name", "-1"),
-                            sharedPreferences.getString("email", "-1"),
+                            sharedPreferences.getString("mail", "-1"),
                             txt.getText().toString(),
                             color,
                             String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime()))
@@ -169,24 +165,52 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
 
 
         recyclerView.setLayoutManager(linearLayoutManager);
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_animation);
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh list view data.
+                dashboardViewModel.getlist1().observe(getActivity(), new Observer<ArrayList<Post>>() {
+                    @Override
+                    public void onChanged(ArrayList<Post> posts) {
+
+
+
+                        swipeRefreshLayout.setRefreshing(false);
+
+
+                        recyclerView.setBackgroundColor(Color.WHITE);
+                        postAdapter = new postAdapter(getContext(), posts);
+                        recyclerView.setAdapter(postAdapter);
+                        recyclerView.setLayoutAnimation(controller);
+                        recyclerView.scheduleLayoutAnimation();
+
+
+
+
+                    }
+                });
+
+            }
+        });
 
 
         dashboardViewModel.getlist().observe(getActivity(), new Observer<ArrayList<Post>>() {
             @Override
             public void onChanged(ArrayList<Post> posts) {
-                if(progressDialog.isShowing())
-                {
-                    progressDialog.dismiss();
-                }
 
-                if(posts.size()>0) {
 
-                    recyclerView.setBackgroundColor(Color.WHITE);
+
+                swipeRefreshLayout.setRefreshing(false);
+
+
+                recyclerView.setBackgroundColor(Color.WHITE);
                     postAdapter = new postAdapter(getContext(), posts);
                     recyclerView.setAdapter(postAdapter);
-                }
-
+                    recyclerView.setLayoutAnimation(controller);
+                    recyclerView.scheduleLayoutAnimation();
 
 
 
@@ -211,10 +235,8 @@ public class DashboardFragment extends Fragment implements View.OnClickListener{
         });
 
 
-
         return root;
     }
-
 
 
     @Override

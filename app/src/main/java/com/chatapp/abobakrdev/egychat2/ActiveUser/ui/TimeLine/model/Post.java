@@ -10,12 +10,6 @@ public class Post {
     public Post() {
     }
 
-    public Post(String text, String color, String mail, String date, String day) {
-        this.text = text;
-        this.color = color;
-        this.mail = mail;
-        this.date = date;
-    }
 
     public String getName() {
         return name;
