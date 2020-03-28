@@ -2,6 +2,7 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser.Chat;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,7 +39,7 @@ public class Chat_Activity extends AppCompatActivity {
 
     private TextView name;
     private CircleImageView img;
-    private LinearLayout send;
+    private ConstraintLayout send;
     String delegate = "hh:mm aaa";
     private chatViewmodel chatViewmodel;
     SharedPreferences sharedPreferences;
@@ -56,12 +57,7 @@ public class Chat_Activity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.chatactionbar);
 
 
-        name = findViewById(R.id.name);
-        img = findViewById(R.id.img3);
 
-
-        name.setText(getIntent().getExtras().getString("name"));
-        Glide.with(getApplicationContext()).load(getIntent().getExtras().getString("img")).into(img);
 
     }
 
@@ -71,9 +67,16 @@ public class Chat_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_);
 
-        LoadActionBar();
+       // LoadActionBar();
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        name = findViewById(R.id.name);
+        img = findViewById(R.id.img3);
+
+
+        name.setText(getIntent().getExtras().getString("name"));
+        Glide.with(getApplicationContext()).load(getIntent().getExtras().getString("img")).into(img);
 
         chatViewmodel = ViewModelProviders.of(this).get(chatViewmodel.class);
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);

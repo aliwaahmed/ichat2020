@@ -37,8 +37,9 @@
         android:background="@drawable/my_msgs_background"
         android:maxWidth="240dp"
         android:padding="8dp"
+
         android:text="hi man, how are you?"
-        android:textColor="#ffffff"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/image_message_profile"
         app:layout_constraintTop_toBottomOf="@+id/text_message_name" />
@@ -50,6 +51,8 @@
         android:layout_marginLeft="4dp"
         android:text="11:40"
         android:textSize="10sp"
+        android:textColor="@color/black"
+
         app:layout_constraintBottom_toBottomOf="@+id/text_message_body"
         app:layout_constraintLeft_toRightOf="@+id/text_message_body" />
 

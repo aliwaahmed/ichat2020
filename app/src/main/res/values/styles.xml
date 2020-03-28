@@ -10,13 +10,11 @@
         <item name="colorAccent">@color/appColor</item>
         <item name="android:fitsSystemWindows">true</item>
 
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">true</item>
         <item name="android:windowFullscreen">true</item>
 
-        <!--        <item name="android:statusBarColor">@color/gray</item>-->
+                <item name="android:statusBarColor">@color/stausbar</item>-->
 
-        <!--        &lt;!&ndash;        <item name="android:windowTranslucentStatus">true</item>&ndash;&gt;-->
+                        <item name="android:windowTranslucentStatus">true</item>
 
     </style>
 

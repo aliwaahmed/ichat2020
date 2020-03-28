@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="fill"
-    android:background="@drawable/gradient"
     android:fitsSystemWindows="true"
     android:foregroundGravity="fill"
     app:layout_anchorGravity="fill">
@@ -75,7 +74,6 @@
                         android:layout_height="25dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/ic_edit_black_24dp"
-                        android:backgroundTint="@color/appColor"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/name"
