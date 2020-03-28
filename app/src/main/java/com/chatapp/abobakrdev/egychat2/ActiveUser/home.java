@@ -4,19 +4,25 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -81,6 +87,24 @@ public class home extends AppCompatActivity {
         FirebaseOperation.getInstance(getApplicationContext()).
                 add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
                         String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())), name, img, gender);
+
+
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(
+                new OnCompleteListener<InstanceIdResult>() {
+                    @Override public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("token1", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        Log.d("token", token);
+                    }
+                });
+
+
+
+
 
 
     }
