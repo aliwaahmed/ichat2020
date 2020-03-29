@@ -3,6 +3,7 @@ package com.chatapp.abobakrdev.egychat2.ActiveUser.Chat;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -57,8 +59,6 @@ public class Chat_Activity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.chatactionbar);
 
 
-
-
     }
 
 
@@ -67,9 +67,6 @@ public class Chat_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_);
 
-       // LoadActionBar();
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         name = findViewById(R.id.name);
         img = findViewById(R.id.img3);
@@ -92,31 +89,29 @@ public class Chat_Activity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!_txtmsg.getText().toString().isEmpty()){
+                if (!_txtmsg.getText().toString().isEmpty()) {
 
 
-                String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
+                    String timeStamp = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
 
-                Message message = new Message();
-                message.setTime(String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())));
-                message.setTxt(_txtmsg.getText().toString());
-                message.setImg(sharedPreferences.getString("img", "-1").toString());
-                message.setType("0");
-                message.setSend(sharedPreferences.getString("Gmail", "-1"));
+                    Message message = new Message();
+                    message.setTime(String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())));
+                    message.setTxt(_txtmsg.getText().toString());
+                    message.setImg(sharedPreferences.getString("img", "-1").toString());
+                    message.setType("0");
+                    message.setSend(sharedPreferences.getString("Gmail", "-1"));
 
-                // message.setTimeStamp(timeStamp);
+                    // message.setTimeStamp(timeStamp);
 
 
-                FirebaseOperation.getInstance(getApplicationContext()).
-                        SendMessage(FirebaseOperation.getInstance(getApplicationContext()).
-                                        Remove_delemeter(getIntent().getExtras().getString("mail", "-1")),
-                                message);
+                    FirebaseOperation.getInstance(getApplicationContext()).
+                            SendMessage(FirebaseOperation.getInstance(getApplicationContext()).
+                                            Remove_delemeter(getIntent().getExtras().getString("mail", "-1")),
+                                    message);
 
-                _txtmsg.setText("");
-                }
-                else
-                {
-                    Snackbar.make(v,"Enter Message", Snackbar.LENGTH_LONG)
+                    _txtmsg.setText("");
+                } else {
+                    Snackbar.make(v, "Enter Message", Snackbar.LENGTH_LONG)
                             .setBackgroundTint(getResources().getColor(R.color.appColor))
                             .show();
                 }

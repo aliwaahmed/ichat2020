@@ -19,7 +19,8 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".ActiveUser.Chat.Chat_Activity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity android:name=".Visit_profile_Activity" />
         <activity android:name=".login.CompleteInfo.Completeinfo" />
         <activity android:name=".ActiveUser.ui.Setting.Viewimage" />

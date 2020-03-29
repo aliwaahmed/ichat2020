@@ -48,6 +48,7 @@
     <color name="mainbg">#151F2A</color>
     <color name="toolbar">#192532</color>
     <color name="trans">#A8000000</color>
+    <color name="my_statusbar_color">#000a12</color>
 
 
 </resources>

@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bkkkkkkkkk"
+    android:fillViewport="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:layout_alignParentBottom="true"
+    android:fitsSystemWindows="true">
 
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,26 +31,29 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
-            android:layout_width="match_parent"
             style="@style/Widget.MaterialComponents.CardView"
-            android:elevation="50dp"
-
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#0b5b56"
+
+
+            app:layout_scrollFlags="enterAlways"
+            android:background="#484848"
+            android:elevation="50dp"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintBottom_toTopOf="@+id/recyclerView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" >
+            app:layout_constraintTop_toTopOf="parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.6"
-                android:paddingLeft= "10dp"
+                android:gravity="center"
+                android:paddingLeft="10dp"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:gravity="center">
+                android:paddingBottom="5dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img3"
@@ -53,10 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/fo_10"
-
-
-                    android:textColor="@color/black"
-
+                    android:text="sd"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/di_16" />
             </LinearLayout>
 
@@ -65,14 +77,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout5"
             android:layout_width="0dp"
+            style="@style/Widget.MaterialComponents.CardView"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:elevation="@dimen/fo_10"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/chat_edite_text"
+            android:elevation="@dimen/di_50"
             android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:fitsSystemWindows="true"
+            android:background="@drawable/editetext"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/send"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recyclerView3">
 
@@ -81,10 +94,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="2dp"
-                android:background="@drawable/editetext"
+                android:background="@null"
                 android:hint="@string/TypingMessage"
                 android:inputType="textMultiLine"
                 android:maxLength="300"
@@ -93,30 +103,33 @@
                 android:paddingRight="@dimen/di_4"
                 android:textSize="@dimen/fo_18"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/send"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/send"
+                android:layout_width="45dp"
+                android:layout_height="40dp"
+                android:elevation="@dimen/fo_10"
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/send"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/sendicoon"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:backgroundTint="@color/black"
-
-            android:elevation="@dimen/fo_10"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout5">
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="@drawable/ic_send_black_24dp"
+                    android:backgroundTint="#737373"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -128,9 +141,9 @@
             android:paddingBottom="@dimen/di_2"
 
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
+
+
             app:layout_constraintEnd_toEndOf="parent"
-
-
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar2">
@@ -139,3 +152,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

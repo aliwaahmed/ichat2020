@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/my_msgs_background"
+        android:background="@drawable/my_msgs_background_reciev"
         android:maxWidth="240dp"
         android:padding="8dp"
 
