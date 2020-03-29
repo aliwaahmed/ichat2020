@@ -46,6 +46,7 @@
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/ja"
                     android:text="Name"
+                    android:textStyle="bold"
                     android:textColor="@color/black" />
 
                 <LinearLayout
@@ -69,7 +70,7 @@
                         android:layout_marginLeft="20dp"
                         android:fontFamily="@font/ja"
                         android:text="time Enter"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/gray" />
                 </LinearLayout>
 
             </LinearLayout>
