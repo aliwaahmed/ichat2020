@@ -9,11 +9,7 @@
         android:id="@+id/navigation_home"
         android:name="com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_navigation_home_to_chat"
-            app:destination="@id/chat" />
-    </fragment>
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -26,13 +22,4 @@
         android:name="com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Setting.SettingFragment"
         android:label="@string/Setting"
         tools:layout="@layout/content_scrolling" />
-    <fragment
-        android:id="@+id/chat"
-        android:name="com.chatapp.abobakrdev.egychat2.chat"
-        android:label="fragment_chat"
-        tools:layout="@layout/fragment_chat" >
-        <action
-            android:id="@+id/action_chat_to_navigation_home"
-            app:destination="@id/navigation_home" />
-    </fragment>
 </navigation>

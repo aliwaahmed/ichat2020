@@ -275,30 +275,12 @@ public class FirebaseOperation {
 
     }
 
-    /***
-     * @param mail
-     * @param message
-     */
-    public void SendMessage(String mail, Message message) {
-
-
-        DatabaseReference myRef;
-
-        myRef = database.getReference("chats")
-                .child(Generate_Child(mail)).push();
-
-
-        myRef.setValue(message);
-        myRef.keepSynced(true);
-
-
-    }
 
     /**
      * @param mail
      * @param message
      */
-    public void Send_msg_while_offline(String mail, Message message) {
+    public void  SendMessage(String mail, Message message) {
         DatabaseReference myRef;
 
         myRef = database.getReference("chats")

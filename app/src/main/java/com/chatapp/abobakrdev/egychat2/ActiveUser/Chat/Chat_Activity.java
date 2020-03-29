@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.ChatAdapter.Adapter;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.mViewmodel.chatViewmodel;
 import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Services.message_listenter;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -52,15 +53,7 @@ public class Chat_Activity extends AppCompatActivity {
     private LinearLayoutManager linearLayoutManager;
     private View viewactionbar;
 
-    public void LoadActionBar() {
 
-        viewactionbar = getSupportActionBar().getCustomView();
-        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.chatactionbar);
-
-
-    }
 
 
     @Override
@@ -120,6 +113,10 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
+        message_listenter.current_user_chat=FirebaseOperation.getInstance(getApplicationContext()).
+                Remove_delemeter(getIntent().getExtras().getString("mail", "-1"));
+
+
         chatViewmodel.HomeViewModel(FirebaseOperation.getInstance(getApplicationContext()).Remove_delemeter(getIntent().getExtras().getString("mail", "-2")), getApplicationContext())
                 .observe(this, new Observer<ArrayList<Message>>() {
                     @Override
@@ -133,5 +130,31 @@ public class Chat_Activity extends AppCompatActivity {
                 });
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        message_listenter.current_user_chat="";
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onPause() {
+        message_listenter.current_user_chat="";
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        message_listenter.current_user_chat="";
+        super.onStop();
+    }
+
+    @Override
+    public void onBackPressed() {
+        message_listenter.current_user_chat="";
+
+        super.onBackPressed();
     }
 }

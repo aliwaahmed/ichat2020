@@ -7,6 +7,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 
+import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Services.message_listenter;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.ads.AdRequest;
@@ -41,6 +42,8 @@ public class home extends AppCompatActivity {
     private AdView mAdView;
     private  String delegate = "hh:mm aaa";
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
+    private static final int RSS_JOB_ID = 1000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,7 @@ public class home extends AppCompatActivity {
 //
 //        }
 //        startService(new Intent(this, notification.class));
-
+// Starts the JobIntentService
 
 
 
@@ -80,6 +83,7 @@ public class home extends AppCompatActivity {
         gender = sharedPreferences.getString("gender", "-1");
         img = sharedPreferences.getString("img", "-1");
 
+        message_listenter.startActionBaz(getApplicationContext(),mail,"");
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
