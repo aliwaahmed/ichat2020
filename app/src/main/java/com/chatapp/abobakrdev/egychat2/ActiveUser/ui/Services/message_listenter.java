@@ -1,13 +1,16 @@
 package com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Services;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
@@ -33,10 +36,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -45,7 +52,7 @@ import androidx.core.app.NotificationCompat;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
-public class message_listenter extends IntentService {
+public class message_listenter extends IntentService  {
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_FOO = "com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.Services.action.FOO";
@@ -56,9 +63,25 @@ public class message_listenter extends IntentService {
     private static final String EXTRA_PARAM2 = "com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.Services.extra.PARAM2";
 
 
-    public static String current_user_chat ="";
+    private BroadcastReceiver mMessageReceiver;
+    private String currentuser="";
+
+
+
     public message_listenter() {
         super("message_listenter");
+        // Our handler for received Intents. This will be called whenever an Intent
+// with an action named "custom-event-name" is broadcasted.
+        mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Get extra data included in the Intent
+
+                String message = intent.getStringExtra("message");
+                currentuser=message.toString().trim();
+                Log.e("broadcast",currentuser);
+            }
+        };
     }
 
     /**
@@ -94,6 +117,7 @@ public class message_listenter extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
+
             final String action = intent.getAction();
             if (ACTION_FOO.equals(action)) {
                 final String param1 = intent.getStringExtra(EXTRA_PARAM1);
@@ -104,7 +128,12 @@ public class message_listenter extends IntentService {
                 final String param2 = intent.getStringExtra(EXTRA_PARAM2);
                 handleActionBaz(param1, param2);
             }
+            LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+                    new IntentFilter("custom-event-name"));
+
+
         }
+
     }
 
     /**
@@ -116,7 +145,8 @@ public class message_listenter extends IntentService {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String img,txt,mail;
+    String img, txt, mail;
+
     /**
      * Handle action Baz in the provided background thread with the provided
      * parameters.
@@ -132,18 +162,14 @@ public class message_listenter extends IntentService {
             public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable String s) {
 
 
+                mail = dataSnapshot.getKey().toString();
 
-
-
-                mail=dataSnapshot.getKey().toString();
-
-                Log.e("mailali:to",mail);
+                Log.e("mailali:to", mail);
 
                 Target target = null;
-                for (final DataSnapshot jobSnapshot: dataSnapshot.getChildren()) {
+                for (final DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
                     String key = jobSnapshot.getKey().toString();
-                    Log.e("key89",mail);
-                    Log.e("current",current_user_chat);
+                    Log.e("key89", mail);
                     if (key.equals("txt")) {
                         txt = jobSnapshot.getValue(String.class);
 
@@ -154,23 +180,24 @@ public class message_listenter extends IntentService {
 
                     }
 
+
                 }
-                if(!current_user_chat.equals(FirebaseOperation.getInstance(getApplicationContext()).
-                        Remove_delemeter(mail.trim())))
-                {
+
+
+                if (!currentuser.equals(FirebaseOperation.getInstance(getApplicationContext()).
+                        Remove_delemeter(mail.trim()))) {
 
                     target = new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-                            sendNotification(bitmap,txt,img,mail);
+                            sendNotification(bitmap, txt, img, mail);
                         }
-
 
 
                         @Override
                         public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                            Log.e("errorimg",e.getMessage().toString());
+                            Log.e("errorimg", e.getMessage().toString());
 
                         }
 
@@ -184,8 +211,7 @@ public class message_listenter extends IntentService {
                             .into(target);
 
 
-                    Log.e("imgali",img);
-
+                    Log.e("imgali", img);
 
 
                 }
@@ -197,18 +223,14 @@ public class message_listenter extends IntentService {
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
 
+                mail = dataSnapshot.getKey().toString();
 
-
-
-                mail=dataSnapshot.getKey().toString();
-
-                Log.e("mailali:to",mail);
+                Log.e("mailali:to", mail);
 
                 Target target = null;
-                for (final DataSnapshot jobSnapshot: dataSnapshot.getChildren()) {
+                for (final DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
                     String key = jobSnapshot.getKey().toString();
-                   Log.e("key89",mail);
-                   Log.e("current",current_user_chat);
+                    Log.e("key89", mail);
                     if (key.equals("txt")) {
                         txt = jobSnapshot.getValue(String.class);
 
@@ -220,22 +242,21 @@ public class message_listenter extends IntentService {
                     }
 
                 }
-                if(!current_user_chat.equals(FirebaseOperation.getInstance(getApplicationContext()).
-                        Remove_delemeter(mail.trim())))
-                {
+
+                if (!currentuser.equals(FirebaseOperation.getInstance(getApplicationContext()).
+                        Remove_delemeter(mail.trim()))) {
 
                     target = new Target() {
                         @Override
                         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
 
-                            sendNotification(bitmap,txt,img,mail);
+                            sendNotification(bitmap, txt, img, mail);
                         }
-
 
 
                         @Override
                         public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                            Log.e("errorimg",e.getMessage().toString());
+                            Log.e("errorimg", e.getMessage().toString());
 
                         }
 
@@ -249,15 +270,10 @@ public class message_listenter extends IntentService {
                             .into(target);
 
 
-                    Log.e("imgali",img);
-
+                    Log.e("imgali", img);
 
 
                 }
-
-
-
-
 
 
             }
@@ -280,58 +296,72 @@ public class message_listenter extends IntentService {
     }
 
     /**
-     *
      * @param bitmap
      * @param txt
      * @param img
      * @param mail
      */
-    private void sendNotification(Bitmap bitmap,String txt,String img,String mail) {
+    private void sendNotification(Bitmap bitmap, String txt, String img, String mail) {
 
-        Log.e("notificationmail",mail);
-        NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
-        style.bigPicture(bitmap);
+        Log.e("notificationmail", mail);
 
-        Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Intent intent = new Intent(getApplicationContext(), Chat_Activity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("mail", mail);
-        intent.putExtra("name", mail);
-        intent.putExtra("img", img);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
-                intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        if(!mail.toString().trim().equals(currentuser)) {
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "10as1";
+            NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
+            style.bigPicture(bitmap);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
+            Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-            //Configure Notification Channel
-            notificationChannel.setDescription("Game Notifications");
-            notificationChannel.enableLights(true);
-            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
-            notificationChannel.enableVibration(true);
+            Intent intent = new Intent(getApplicationContext(), Chat_Activity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 
-            notificationManager.createNotificationChannel(notificationChannel);
+                    |Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("mail", mail);
+            intent.putExtra("name", mail);
+            intent.putExtra("img", img);
+
+
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
+                    intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            String NOTIFICATION_CHANNEL_ID = "10as1";
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
+
+                //Configure Notification Channel
+                notificationChannel.setDescription("Game Notifications");
+                notificationChannel.enableLights(true);
+                notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+                notificationChannel.enableVibration(true);
+
+                notificationManager.createNotificationChannel(notificationChannel);
+            }
+
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat
+                    .Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+                    .setSmallIcon(R.mipmap.ic_launcher_round)
+                    .setContentTitle(txt)
+                    .setAutoCancel(true)
+                    .setStyle(style)
+                    .setSound(defaultSound)
+                    .setContentText(Config.content)
+                    .setContentIntent(pendingIntent)
+                    .setWhen(System.currentTimeMillis())
+                    .setPriority(Notification.PRIORITY_MAX);
+
+
+            notificationManager.notify(NotificationID.getID(), notificationBuilder.build());
         }
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat
-                .Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentTitle(txt)
-                .setAutoCancel(true)
-                .setStyle(style)
-                .setSound(defaultSound)
-                .setContentText(Config.content)
-                .setContentIntent(pendingIntent)
-                .setWhen(System.currentTimeMillis())
-                .setPriority(Notification.PRIORITY_MAX);
 
-
-        notificationManager.notify(Integer.MAX_VALUE, notificationBuilder.build());
-
-
+    }
+}
+ class NotificationID {
+    private final static AtomicInteger c = new AtomicInteger(0);
+    public static int getID() {
+        return c.incrementAndGet();
     }
 }

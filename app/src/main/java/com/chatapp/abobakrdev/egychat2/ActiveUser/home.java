@@ -26,6 +26,7 @@ import java.util.Locale;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
@@ -118,6 +119,20 @@ public class home extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", "");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", "");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
 }

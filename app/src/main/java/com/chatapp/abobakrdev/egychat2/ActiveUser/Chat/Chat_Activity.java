@@ -1,27 +1,23 @@
 package com.chatapp.abobakrdev.egychat2.ActiveUser.Chat;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -52,8 +48,6 @@ public class Chat_Activity extends AppCompatActivity {
     private Adapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private View viewactionbar;
-
-
 
 
     @Override
@@ -113,8 +107,12 @@ public class Chat_Activity extends AppCompatActivity {
             }
         });
 
-        message_listenter.current_user_chat=FirebaseOperation.getInstance(getApplicationContext()).
-                Remove_delemeter(getIntent().getExtras().getString("mail", "-1"));
+
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", FirebaseOperation.getInstance(getApplicationContext()).
+                Remove_delemeter(getIntent().getExtras().getString("mail", "-1")));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
 
         chatViewmodel.HomeViewModel(FirebaseOperation.getInstance(getApplicationContext()).Remove_delemeter(getIntent().getExtras().getString("mail", "-2")), getApplicationContext())
@@ -126,35 +124,113 @@ public class Chat_Activity extends AppCompatActivity {
                         recyclerView3.setAdapter(adapter);
 
 
+
                     }
                 });
+
+        new CountDownTimer(1000,100)
+        {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent("custom-event-name");
+                // You can also include some extra data.
+                intent.putExtra("message", FirebaseOperation.getInstance(getApplicationContext()).
+                        Remove_delemeter(getIntent().getExtras().getString("mail", "-1")));
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            }
+        }.start();
+
+
+    }
+
+
+
+
+    @Override
+    protected void onPostResume() {
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", FirebaseOperation.getInstance(getApplicationContext()).
+                Remove_delemeter(getIntent().getExtras().getString("mail", "-1")));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        super.onPostResume();
 
 
     }
 
     @Override
-    protected void onDestroy() {
-        message_listenter.current_user_chat="";
+    protected void onStart() {
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", FirebaseOperation.getInstance(getApplicationContext()).
+                Remove_delemeter(getIntent().getExtras().getString("mail", "-1")));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        super.onStart();
 
+
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", FirebaseOperation.getInstance(getApplicationContext()).
+                Remove_delemeter(getIntent().getExtras().getString("mail", "-1")));
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        super.onResume();
+
+
+    }
+
+
+
+
+
+
+
+
+
+    @Override
+    protected void onDestroy() {
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", "");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         super.onDestroy();
     }
 
     @Override
-    protected void onPause() {
-        message_listenter.current_user_chat="";
-        super.onPause();
-    }
-
-    @Override
     protected void onStop() {
-        message_listenter.current_user_chat="";
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", "");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         super.onStop();
     }
 
     @Override
-    public void onBackPressed() {
-        message_listenter.current_user_chat="";
+    protected void onPause() {
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", "");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        super.onPause();
+    }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent("custom-event-name");
+        // You can also include some extra data.
+        intent.putExtra("message", "");
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
         super.onBackPressed();
     }
 }
