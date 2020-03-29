@@ -5,15 +5,15 @@
 
 
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/appColor</item>
-        <item name="colorPrimaryDark">@color/appColor</item>
-        <item name="colorAccent">@color/appColor</item>
-        <item name="android:fitsSystemWindows">true</item>
+        <item name="colorPrimary">#212121</item>
+        <item name="colorPrimaryDark">#282828</item>
+        <item name="colorAccent">#737373</item>
+        <item name="android:navigationBarColor">#cfcfcf</item>
 
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:statusBarColor">#212121</item>
 
 
-                        <item name="android:windowTranslucentStatus">true</item>
+<!--                        <item name="android:windowTranslucentStatus">true</item>-->
 
     </style>
 

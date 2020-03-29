@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,7 +42,7 @@ public class Chat_Activity extends AppCompatActivity {
 
     private TextView name;
     private CircleImageView img;
-    private ConstraintLayout send;
+    private TextView send;
     String delegate = "hh:mm aaa";
     private chatViewmodel chatViewmodel;
     SharedPreferences sharedPreferences;
@@ -78,8 +79,8 @@ public class Chat_Activity extends AppCompatActivity {
         chatViewmodel = ViewModelProviders.of(this).get(chatViewmodel.class);
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
 
-        send = findViewById(R.id.send);
-        _txtmsg = findViewById(R.id.msg);
+        send = findViewById(R.id.button_chatbox_send);
+        _txtmsg = findViewById(R.id.edittext_chatbox);
         recyclerView3 = findViewById(R.id.recyclerView3);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
