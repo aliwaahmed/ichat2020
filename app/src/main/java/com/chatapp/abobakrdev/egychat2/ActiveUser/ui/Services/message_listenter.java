@@ -52,7 +52,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
  * TODO: Customize class - update intent actions, extra parameters and static
  * helper methods.
  */
-public class message_listenter extends IntentService  {
+public class message_listenter extends IntentService {
     // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_FOO = "com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.Services.action.FOO";
@@ -64,8 +64,7 @@ public class message_listenter extends IntentService  {
 
 
     private BroadcastReceiver mMessageReceiver;
-    private String currentuser="";
-
+    private String currentuser = "";
 
 
     public message_listenter() {
@@ -78,8 +77,8 @@ public class message_listenter extends IntentService  {
                 // Get extra data included in the Intent
 
                 String message = intent.getStringExtra("message");
-                currentuser=message.toString().trim();
-                Log.e("broadcast",currentuser);
+                currentuser = message.toString().trim();
+                Log.e("broadcast", currentuser);
             }
         };
     }
@@ -107,6 +106,7 @@ public class message_listenter extends IntentService  {
      */
     // TODO: Customize helper method
     public static void startActionBaz(Context context, String param1, String param2) {
+
         Intent intent = new Intent(context, message_listenter.class);
         intent.setAction(ACTION_BAZ);
         intent.putExtra(EXTRA_PARAM1, param1);
@@ -155,66 +155,13 @@ public class message_listenter extends IntentService  {
         // TODO: Handle action Baz
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
 
-        DatabaseReference user = firebaseDatabase.getReference("users").child(param1).getRef();
+        DatabaseReference user = firebaseDatabase.getReference("users").child(param1)
+                .child("chats").getRef();
 
-        user.child("chats").addChildEventListener(new ChildEventListener() {
+
+        user.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull final DataSnapshot dataSnapshot, @Nullable String s) {
-
-
-                mail = dataSnapshot.getKey().toString();
-
-                Log.e("mailali:to", mail);
-
-                Target target = null;
-                for (final DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
-                    String key = jobSnapshot.getKey().toString();
-                    Log.e("key89", mail);
-                    if (key.equals("txt")) {
-                        txt = jobSnapshot.getValue(String.class);
-
-                    }
-
-                    if (key.equals("img")) {
-                        img = jobSnapshot.getValue(String.class);
-
-                    }
-
-
-                }
-
-
-                if (!currentuser.equals(FirebaseOperation.getInstance(getApplicationContext()).
-                        Remove_delemeter(mail.trim()))) {
-
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-
-                            sendNotification(bitmap, txt, img, mail);
-                        }
-
-
-                        @Override
-                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                            Log.e("errorimg", e.getMessage().toString());
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    };
-                    Picasso.get()
-                            .load(img)
-                            .into(target);
-
-
-                    Log.e("imgali", img);
-
-
-                }
 
 
             }
@@ -231,49 +178,50 @@ public class message_listenter extends IntentService  {
                 for (final DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
                     String key = jobSnapshot.getKey().toString();
                     Log.e("key89", mail);
-                    if (key.equals("txt")) {
-                        txt = jobSnapshot.getValue(String.class);
-
-                    }
-
                     if (key.equals("img")) {
                         img = jobSnapshot.getValue(String.class);
 
                     }
 
+                    if (key.equals("txt")) {
+                        txt = jobSnapshot.getValue(String.class);
+                        if (!currentuser.equals(FirebaseOperation.getInstance(getApplicationContext()).
+                                Remove_delemeter(mail.trim()))) {
+
+                            target = new Target() {
+                                @Override
+                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+
+                                    sendNotification(bitmap, txt, img, mail);
+                                }
+
+
+                                @Override
+                                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                                    Log.e("errorimg", e.getMessage().toString());
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            };
+                            Picasso.get()
+                                    .load(img)
+                                    .into(target);
+
+
+                            Log.e("imgali", img);
+
+
+                        }
+                    }
+
+
                 }
 
-                if (!currentuser.equals(FirebaseOperation.getInstance(getApplicationContext()).
-                        Remove_delemeter(mail.trim()))) {
 
-                    target = new Target() {
-                        @Override
-                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-
-                            sendNotification(bitmap, txt, img, mail);
-                        }
-
-
-                        @Override
-                        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-                            Log.e("errorimg", e.getMessage().toString());
-
-                        }
-
-                        @Override
-                        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                        }
-                    };
-                    Picasso.get()
-                            .load(img)
-                            .into(target);
-
-
-                    Log.e("imgali", img);
-
-
-                }
 
 
             }
@@ -306,7 +254,7 @@ public class message_listenter extends IntentService  {
         Log.e("notificationmail", mail);
 
 
-        if(!mail.toString().trim().equals(currentuser)) {
+        if (!mail.toString().trim().equals(currentuser)) {
 
             NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
             style.bigPicture(bitmap);
@@ -316,7 +264,7 @@ public class message_listenter extends IntentService  {
             Intent intent = new Intent(getApplicationContext(), Chat_Activity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 
-                    |Intent.FLAG_ACTIVITY_NEW_TASK);
+                    | Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("mail", mail);
             intent.putExtra("name", mail);
             intent.putExtra("img", img);
@@ -359,8 +307,10 @@ public class message_listenter extends IntentService  {
 
     }
 }
- class NotificationID {
+
+class NotificationID {
     private final static AtomicInteger c = new AtomicInteger(0);
+
     public static int getID() {
         return c.incrementAndGet();
     }

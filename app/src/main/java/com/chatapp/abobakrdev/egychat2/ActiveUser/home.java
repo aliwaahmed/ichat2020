@@ -84,6 +84,8 @@ public class home extends AppCompatActivity {
         gender = sharedPreferences.getString("gender", "-1");
         img = sharedPreferences.getString("img", "-1");
 
+        stopService(new Intent(getApplicationContext(), message_listenter.class));
+
         message_listenter.startActionBaz(getApplicationContext(),mail,"");
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());

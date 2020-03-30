@@ -290,7 +290,7 @@ public class FirebaseOperation {
         sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
         DatabaseReference myRef1 = database.getReference("users").
                 child(mail
-                ).child("chats").child(mail);
+                ).child("chats").child(Remove_delemeter(message.getSend()));
         myRef1.setValue(message);
 
         myRef.setValue(message);
