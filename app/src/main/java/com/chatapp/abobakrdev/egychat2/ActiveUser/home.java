@@ -41,7 +41,7 @@ public class home extends AppCompatActivity {
     private String gender;
     private String img;
     private AdView mAdView;
-    private  String delegate = "hh:mm aaa";
+    private String delegate = "hh:mm aaa";
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
     private static final int RSS_JOB_ID = 1000;
 
@@ -63,7 +63,6 @@ public class home extends AppCompatActivity {
 // Starts the JobIntentService
 
 
-
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -76,8 +75,6 @@ public class home extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
 
-
-
         name = sharedPreferences.getString("name", "-1");
         mail = sharedPreferences.getString("mail", "-1");
         age = sharedPreferences.getString("age", "-1");
@@ -86,19 +83,21 @@ public class home extends AppCompatActivity {
 
         stopService(new Intent(getApplicationContext(), message_listenter.class));
 
-        message_listenter.startActionBaz(getApplicationContext(),mail,"");
+        message_listenter.startActionBaz(getApplicationContext(), mail, "");
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
 
         FirebaseOperation.getInstance(getApplicationContext()).
                 add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
-                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())), name, img, gender);
+                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())),
+                        name, img, gender);
 
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(
                 new OnCompleteListener<InstanceIdResult>() {
-                    @Override public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
                             Log.e("token1", "getInstanceId failed", task.getException());
                             return;
@@ -110,10 +109,6 @@ public class home extends AppCompatActivity {
                 });
 
 
-
-
-
-
     }
 
 
@@ -121,6 +116,7 @@ public class home extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -129,6 +125,7 @@ public class home extends AppCompatActivity {
         intent.putExtra("message", "");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
     @Override
     protected void onPause() {
         super.onPause();

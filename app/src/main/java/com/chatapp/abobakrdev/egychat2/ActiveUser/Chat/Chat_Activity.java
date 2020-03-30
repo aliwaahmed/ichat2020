@@ -56,6 +56,8 @@ public class Chat_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_);
 
 
+
+
         name = findViewById(R.id.name);
         img = findViewById(R.id.img3);
 
