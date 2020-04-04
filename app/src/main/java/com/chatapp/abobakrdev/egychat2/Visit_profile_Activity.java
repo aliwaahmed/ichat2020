@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.Chat_Activity;
+import com.chatapp.abobakrdev.egychat2.Chat.Chat_Activity;
 
 public class Visit_profile_Activity extends AppCompatActivity {
 

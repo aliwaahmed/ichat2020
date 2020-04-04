@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.HomeFragment"
+        android:name="com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Live.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.DashboardFragment"
+        android:name="com.chatapp.abobakrdev.egychat2.navigationbottom.ui.TimeLine.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Setting.SettingFragment"
+        android:name="com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Setting.SettingFragment"
         android:label="@string/Setting"
         tools:layout="@layout/content_scrolling" />
 </navigation>

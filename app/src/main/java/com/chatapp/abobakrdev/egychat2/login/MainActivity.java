@@ -2,7 +2,6 @@ package com.chatapp.abobakrdev.egychat2.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.SharedPreferencesKt;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.chatapp.abobakrdev.egychat2.ActiveUser.home;
+import com.chatapp.abobakrdev.egychat2.navigationbottom.home;
 import com.chatapp.abobakrdev.egychat2.login.CompleteInfo.Completeinfo;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.auth.api.Auth;

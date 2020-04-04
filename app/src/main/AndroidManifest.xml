@@ -18,14 +18,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <service
-            android:name=".ActiveUser.ui.Services.message_listenter"
+            android:name=".navigationbottom.ui.Services.message_listenter"
             android:exported="false"></service>
 
-        <activity android:name=".ActiveUser.Chat.Chat_Activity" />
+        <activity android:name=".Chat.Chat_Activity" />
         <activity android:name=".Visit_profile_Activity" />
         <activity android:name=".login.CompleteInfo.Completeinfo" />
-        <activity android:name=".ActiveUser.ui.Setting.Viewimage" />
-        <activity android:name=".ActiveUser.home" />
+        <activity android:name=".navigationbottom.ui.Setting.Viewimage" />
+        <activity android:name=".navigationbottom.home" />
         <activity
             android:name=".login.MainActivity"
             android:label="@string/title_activity_home" />

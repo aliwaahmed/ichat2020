@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.chatapp.abobakrdev.egychat2.ActiveUser.Chat.model.Message;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.TimeLine.model.Post;
-import com.chatapp.abobakrdev.egychat2.ActiveUser.ui.Live.model.model;
+import com.chatapp.abobakrdev.egychat2.Chat.model.Message;
+import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.TimeLine.model.Post;
+import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Live.model.model;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

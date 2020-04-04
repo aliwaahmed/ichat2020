@@ -16,10 +16,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.chatapp.abobakrdev.egychat2.ActiveUser.home;
-import com.chatapp.abobakrdev.egychat2.FCM.Config;
+import com.chatapp.abobakrdev.egychat2.navigationbottom.home;
 import com.chatapp.abobakrdev.egychat2.R;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -29,8 +27,6 @@ import com.squareup.picasso.Target;
 import java.util.Map;
 
 import androidx.core.app.NotificationCompat;
-
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
