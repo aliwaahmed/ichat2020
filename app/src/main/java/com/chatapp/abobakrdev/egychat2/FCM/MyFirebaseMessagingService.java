@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.util.Log;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.navigationbottom.home;
 import com.chatapp.abobakrdev.egychat2.R;
+import com.google.firebase.inappmessaging.display.FirebaseInAppMessagingDisplay;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -35,7 +37,8 @@ import java.util.Map;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class MyFirebaseMessagingService extends FirebaseMessagingService
+{
 
     private static final String TAG = "MyFirebaseMessagingServ";
     private BroadcastReceiver mMessageReceiver;
@@ -157,7 +160,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         public void run() {
                             // Get image from data Notification
                             Picasso.get()
-                                    .load(Config.imageUrl)
+                                    .load("https://www.gstatic.com/devrel-devsite/prod/v84899ba5ac366dd19b845bb4579ea9262ac5ac73d5db61a8fa440a5f2fc65a26/firebase/images/lockup.png")
                                     .into(target);
                         }
                     });

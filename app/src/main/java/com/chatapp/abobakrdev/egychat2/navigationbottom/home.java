@@ -3,6 +3,7 @@ package com.chatapp.abobakrdev.egychat2.navigationbottom;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.chatapp.abobakrdev.egychat2.FCM.AlarmReceiver;
 import com.chatapp.abobakrdev.egychat2.FCM.MyFirebaseMessagingService;
+import com.chatapp.abobakrdev.egychat2.FCM.services;
 import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Live.model.model;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
@@ -23,6 +26,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.okhttp.OkHttpClient;
 
 import org.json.JSONArray;
@@ -65,9 +69,24 @@ public class home extends AppCompatActivity {
 
 
         setContentView(R.layout.activity_home);
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
 
-
+//        alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        Intent intent = new Intent(this, AlarmReceiver.class);
+//        alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+//// setRepeating() lets you specify a precise custom interval--in this case,
+//// 20 minutes.
+//        Calendar calendar = Calendar.getInstance();
+//
+//        alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+//                1000 * 30, alarmIntent);
         startRegistrationService();
+
+//        Intent intent1 = new Intent(this, services.class);
+//        intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+//                Intent.FLAG_ACTIVITY_CLEAR_TOP |
+//                Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startService(intent1);
 
 
         mAdView = findViewById(R.id.adView);

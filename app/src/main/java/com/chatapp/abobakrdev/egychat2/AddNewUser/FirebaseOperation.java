@@ -265,7 +265,7 @@ public class FirebaseOperation {
         myRef.keepSynced(true);
 
 
-        myRef.onDisconnect().removeValue();
+        myRef.child(Remove_delemeter(model.getMail())).getRef().onDisconnect().removeValue();
 
     }
 
