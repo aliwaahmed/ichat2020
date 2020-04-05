@@ -54,6 +54,8 @@ public class HomeViewModel extends ViewModel {
                     Log.e("gender", model.getGender());
                     Log.e("img", model.getImg());
                     Log.e("time", model.getTime_enter());
+                    Log.e("token", model.getToken());
+
                     models.put(model.getMail().toString(), model);
                     mText.postValue(models);
                 }

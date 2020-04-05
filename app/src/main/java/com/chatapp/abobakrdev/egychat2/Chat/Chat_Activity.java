@@ -26,6 +26,7 @@ import com.chatapp.abobakrdev.egychat2.Chat.mViewmodel.chatViewmodel;
 import com.chatapp.abobakrdev.egychat2.Chat.model.Message;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
+import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Live.model.model;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -79,11 +80,16 @@ public class Chat_Activity extends AppCompatActivity {
         String gender1 = sharedPreferences.getString("gender", "-1");
         String img1 = sharedPreferences.getString("img", "-1");
 
-        FirebaseOperation.getInstance(getApplicationContext()).
-                add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
-                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())),
-                        name1, img1, gender1);
+        model model =new model();
+        model.setName(name1);
+        model.setToken(sharedPreferences.getString("token","-1"));
+        model.setImg(img1);
+        model.setMail(sharedPreferences.getString("Gmail", "-1"));
+        model.setGender(gender1);
+        model.setTime_enter(String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())));
 
+        FirebaseOperation.getInstance(getApplicationContext()).
+                add_To_active_user(model);
 
         Log.e("mailto:", getIntent().getExtras().getString("mail", "-1"));
         send.setOnClickListener(new View.OnClickListener() {
@@ -102,12 +108,25 @@ public class Chat_Activity extends AppCompatActivity {
                     message.setName(sharedPreferences.getString("name", "-1"));
                     message.setSend(sharedPreferences.getString("Gmail", "-1"));
 
+                    if(!getIntent().getExtras().getString("mtoken","-1").equals("-1")) {
+
+                        message.setMtoken(getIntent().getExtras().getString("mtoken", "-1"));
+                        message.setToken(getIntent().getExtras().getString("token", "-1"));
+
+                    }
+                    else
+                    {
+                        message.setMtoken(sharedPreferences.getString("token", "-1"));
+                        message.setToken(getIntent().getExtras().getString("token", "-1"));
+
+                    }
                     // message.setTimeStamp(timeStamp);
 
 
                     FirebaseOperation.getInstance(getApplicationContext()).
                             SendMessage(FirebaseOperation.getInstance(getApplicationContext()).
-                                            Remove_delemeter(getIntent().getExtras().getString("mail", "-1")),
+                                            Remove_delemeter(getIntent().getExtras()
+                                                    .getString("mail", "-1")),
                                     message);
 
                     _txtmsg.setText("");

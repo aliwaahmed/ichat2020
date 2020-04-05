@@ -8,12 +8,12 @@
         <item name="colorPrimary">#212121</item>
         <item name="colorPrimaryDark">#282828</item>
         <item name="colorAccent">#737373</item>
-        <item name="android:navigationBarColor">#cfcfcf</item>
+        <!--        <item name="android:navigationBarColor">#212121</item>-->
 
         <item name="android:statusBarColor">#212121</item>
 
 
-<!--                        <item name="android:windowTranslucentStatus">true</item>-->
+        <!--                        <item name="android:windowTranslucentStatus">true</item>-->
 
     </style>
 
@@ -36,9 +36,13 @@
 
     <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">10sp</item>
+        <item name="android:color">@color/white</item>
+
     </style>
 
     <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
         <item name="android:textSize">15sp</item>
+        <item name="android:color">@color/pink</item>
     </style>
+
 </resources>

@@ -7,6 +7,15 @@ public class model {
     private String gender;
     private String time_enter;
     private String  hashkey;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getHashkey() {
         return hashkey;

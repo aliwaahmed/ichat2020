@@ -2,6 +2,7 @@ package com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Live.lastconversatio
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,9 @@ public class LastConversationAdapter extends RecyclerView.Adapter<mViewholder> {
                 intent.putExtra("mail", list.get(position).getSend());
                 intent.putExtra("name", list.get(position).getName());
                 intent.putExtra("img", list.get(position).getImg());
+                intent.putExtra("token",list.get(position).getMtoken());
+                intent.putExtra("mtoken",list.get(position).getToken());
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

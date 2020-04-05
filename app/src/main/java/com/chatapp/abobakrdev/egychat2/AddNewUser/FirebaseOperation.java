@@ -3,15 +3,37 @@ package com.chatapp.abobakrdev.egychat2.AddNewUser;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.chatapp.abobakrdev.egychat2.Chat.model.Message;
 import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.TimeLine.model.Post;
 import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Live.model.model;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class FirebaseOperation {
 
@@ -21,7 +43,7 @@ public class FirebaseOperation {
 
     private static SharedPreferences sharedPreferences1;
     private static HashMap<String, Integer> map;
-
+    String token;
     private static FirebaseOperation firebaseOperation;
 
     public static FirebaseOperation getInstance(Context context1) {
@@ -118,43 +140,81 @@ public class FirebaseOperation {
      */
     public void add_user(final String name, final String mail, final String gender, final String age, final String phone, final String img) {
 
-
         Log.e("aa", Remove_delemeter(mail));
         final DatabaseReference myRef = database.getReference("users");
 
 
         myRef.child(Remove_delemeter(mail));
 
-        DatabaseReference refmail = myRef.child(Remove_delemeter(mail)).getRef();
+        final DatabaseReference refmail = myRef.child(Remove_delemeter(mail)).getRef();
 
-        refmail.child("email").setValue(mail);
-        refmail.child("age").setValue(age);
-        refmail.child("gender").setValue(gender);
-        refmail.child("phone").setValue(phone);
-        refmail.child("name").setValue(name);
-        refmail.child("img").setValue(img);
-        refmail.child("about").setValue("");
-        refmail.child("views").setValue("0");
 
-        sharedPreferences.putString("name", name);
-        sharedPreferences.putString("Gmail", mail);
-        sharedPreferences.putString("mail", Remove_delemeter(mail));
-        sharedPreferences.putString("age", age);
-        sharedPreferences.putString("gender", gender);
-        sharedPreferences.putString("img", img);
-        sharedPreferences.putString("phone", phone);
-        sharedPreferences.putString("img0", "");
-        sharedPreferences.putString("img1", "");
-        sharedPreferences.putString("img2", "");
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(
+                new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
 
-        sharedPreferences.apply();
-        sharedPreferences.commit();
-        DatabaseReference subimg = refmail.child("images").getRef().child("img0");
-        subimg.setValue("");
-        DatabaseReference subimg1 = refmail.child("images").getRef().child("img1");
-        subimg1.setValue("");
-        DatabaseReference subimg2 = refmail.child("images").getRef().child("img2");
-        subimg2.setValue("");
+                            Log.e("token1", "getInstanceId failed", task.getException());
+                            return;
+                        }
+                        // Get new Instance ID token
+                        refmail.child("token").setValue(task.getResult().getToken());
+
+                         token = task.getResult().getToken();
+                        Log.d("token", token);
+
+                        refmail.child("email").setValue(mail);
+                        refmail.child("age").setValue(age);
+                        refmail.child("gender").setValue(gender);
+                        refmail.child("phone").setValue(phone);
+                        refmail.child("name").setValue(name);
+                        refmail.child("img").setValue(img);
+                        refmail.child("about").setValue("");
+                        refmail.child("views").setValue("0");
+
+                        sharedPreferences.putString("name", name);
+                        sharedPreferences.putString("Gmail", mail);
+                        sharedPreferences.putString("mail", Remove_delemeter(mail));
+                        sharedPreferences.putString("age", age);
+                        sharedPreferences.putString("gender", gender);
+                        sharedPreferences.putString("img", img);
+                        sharedPreferences.putString("phone", phone);
+                        sharedPreferences.putString("token",token);
+                        sharedPreferences.putString("img0", "");
+                        sharedPreferences.putString("img1", "");
+                        sharedPreferences.putString("img2", "");
+
+                        sharedPreferences.apply();
+                        sharedPreferences.commit();
+                        DatabaseReference subimg = refmail.child("images").getRef().child("img0");
+                        subimg.setValue("");
+                        DatabaseReference subimg1 = refmail.child("images").getRef().child("img1");
+                        subimg1.setValue("");
+                        DatabaseReference subimg2 = refmail.child("images").getRef().child("img2");
+                        subimg2.setValue("");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }
+                });
+
+
+
+
 
 
     }
@@ -189,30 +249,18 @@ public class FirebaseOperation {
         return stringBuilder.toString();
     }
 
-    /**
-     * @param mail
-     * @param time
-     */
-    public void add_To_active_user(String mail, String time, String name, String img, String gender) {
+
+    public void add_To_active_user(model model) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         SharedPreferences sharedPreferences;
 
         sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-        model jsonObject = new model();
 
-        jsonObject.setMail(mail);
-        jsonObject.setName(name);
-
-        jsonObject.setTime_enter(time);
-
-        jsonObject.setGender(gender);
-
-        jsonObject.setImg(img);
 
 
         DatabaseReference myRef = database.getReference("active_user");
-        myRef.child(Remove_delemeter(mail))
-                .setValue(jsonObject);
+        myRef.child(Remove_delemeter(model.getMail()))
+                .setValue(model);
 
         myRef.keepSynced(true);
 
@@ -280,19 +328,64 @@ public class FirebaseOperation {
      * @param mail
      * @param message
      */
-    public void  SendMessage(String mail, Message message) {
-        DatabaseReference myRef;
+    public void  SendMessage(String mail, final Message message) {
 
-        myRef = database.getReference("chats")
-                .child(Generate_Child(mail)).push();
-        SharedPreferences sharedPreferences;
+        final SharedPreferences sharedPreferences;
 
         sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
+
+                JSONObject root = new JSONObject();
+
+                try {
+
+                    JSONObject data = new JSONObject();
+                    data.put("message", "Sfsf");
+                    data.put("mail",sharedPreferences.getString("mail","-1"));
+                    data.put("img",sharedPreferences.getString("img","-1"));
+
+
+                    root.put("data", data);
+                    root.put("registration_ids", message.getToken());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                sendPushToSingleInstance(context,root,message.getToken());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        DatabaseReference myRef;
+        myRef = database.getReference("chats")
+                .child(Generate_Child(mail)).push();
         DatabaseReference myRef1 = database.getReference("users").
                 child(mail
                 ).child("chats").child(Remove_delemeter(message.getSend()));
         myRef1.setValue(message);
-
+        myRef.keepSynced(true);
+        myRef1.keepSynced(true);
         myRef.setValue(message);
 
     }
@@ -346,6 +439,47 @@ public class FirebaseOperation {
         }
     }
 
+    public static void sendPushToSingleInstance(final Context activity, final JSONObject dataValue /*your data from the activity*/, final String instanceIdToken /*firebase instance token you will find in documentation that how to get this*/ ) {
 
+
+        final String url = "https://fcm.googleapis.com/fcm/send";
+        StringRequest myReq = new StringRequest(Request.Method.POST,url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(activity, "Bingo Success", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(activity, "Oops error", Toast.LENGTH_SHORT).show();
+                    }
+                }) {
+
+            @Override
+            public byte[] getBody() throws com.android.volley.AuthFailureError {
+                Map<String, Object> rawParameters = new Hashtable();
+                rawParameters.put("data", dataValue);
+                rawParameters.put("to", instanceIdToken);
+                return new JSONObject(rawParameters).toString().getBytes();
+            };
+
+            public String getBodyContentType()
+            {
+                return "application/json; charset=utf-8";
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "key="+"AAAAHCSgByE:APA91bF_31eEGTTJJZ3rv-HpZUZJ7t7SQFBjosvJlAcBIegl8Jl3VS-1d-zL3UjNlyOQJsUtVrNx07DejohLZh1JcUvX3UoodO41FOt5d4hYKbpMBspg9dSHP4cfFL4pGah8-CKHDH8h");
+                headers.put("Content-Type","application/json");
+                return headers;
+            }
+
+        };
+
+        Volley.newRequestQueue(activity).add(myReq);
+    }
 
 }

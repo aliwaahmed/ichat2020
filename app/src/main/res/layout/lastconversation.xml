@@ -5,9 +5,7 @@
     android:id="@+id/_lin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    android:background="@color/gray"
-
+    android:background="@color/white_gray"
     android:orientation="vertical">
 
 
@@ -20,20 +18,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/_img"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/avatar" />
+                android:src="@drawable/avatar"
+                app:civ_border_color="@color/dark_blue"
+                app:civ_border_width="1dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
@@ -47,22 +49,18 @@
                     android:textColor="@color/black" />
 
 
-                    <TextView
-                        android:id="@+id/textView8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="msg"
-                        android:gravity="left"
-                        android:paddingTop="@dimen/fo_10"
-                        android:textColor="@color/gray" />
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="left"
+                    android:paddingTop="@dimen/fo_10"
+                    android:text="msg"
+                    android:textColor="@color/gray" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

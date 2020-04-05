@@ -1,22 +1,31 @@
 package com.chatapp.abobakrdev.egychat2.navigationbottom;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.View;
+import android.widget.Toast;
 
-import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Services.message_listenter;
+import com.chatapp.abobakrdev.egychat2.FCM.MyFirebaseMessagingService;
+import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Live.model.model;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.squareup.okhttp.OkHttpClient;
+
+import org.json.JSONArray;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,7 +33,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.navigation.NavController;
@@ -33,6 +41,7 @@ import androidx.navigation.ui.NavigationUI;
 
 public class home extends AppCompatActivity {
 
+    public static final int REQUEST_GOOGLE_PLAY_SERVICES = 1972;
     private SharedPreferences sharedPreferences;
 
     private String name;
@@ -44,7 +53,11 @@ public class home extends AppCompatActivity {
     private String delegate = "hh:mm aaa";
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
     private static final int RSS_JOB_ID = 1000;
-
+    OkHttpClient mClient;
+    JSONArray jsonArray;
+    String token;
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +66,8 @@ public class home extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-//            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-//                    Uri.parse("package:" + getPackageName()));
-//            startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
-//
-//        }
-//        startService(new Intent(this, notification.class));
-// Starts the JobIntentService
+
+        startRegistrationService();
 
 
         mAdView = findViewById(R.id.adView);
@@ -80,17 +87,11 @@ public class home extends AppCompatActivity {
         gender = sharedPreferences.getString("gender", "-1");
         img = sharedPreferences.getString("img", "-1");
 
-        stopService(new Intent(getApplicationContext(), message_listenter.class));
+        //stopService(new Intent(getApplicationContext(), message_listenter.class));
 
-        message_listenter.startActionBaz(getApplicationContext(), mail, "");
+        //  message_listenter.startActionBaz(getApplicationContext(), mail, "");
 
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-
-
-        FirebaseOperation.getInstance(getApplicationContext()).
-                add_To_active_user(sharedPreferences.getString("Gmail", "-1"),
-                        String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())),
-                        name, img, gender);
 
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(
@@ -102,18 +103,45 @@ public class home extends AppCompatActivity {
                             return;
                         }
                         // Get new Instance ID token
-                        String token = task.getResult().getToken();
+                        token = task.getResult().getToken();
+
+                        String refreshedToken = token;//add your user refresh tokens who are logged in with firebase.
+
+                        jsonArray = new JSONArray();
+                        jsonArray.put(refreshedToken);
                         Log.d("token", token);
                     }
                 });
+
+
+        model model = new model();
+        model.setName(name);
+        model.setToken(sharedPreferences.getString("token", "-1"));
+        model.setImg(img);
+        model.setMail(sharedPreferences.getString("Gmail", "-1"));
+        model.setGender(gender);
+        model.setTime_enter(String.valueOf(DateFormat.format(delegate, Calendar.getInstance().getTime())));
+
+        FirebaseOperation.getInstance(getApplicationContext()).
+                add_To_active_user(model);
 
 
     }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_GOOGLE_PLAY_SERVICES:
+                if (resultCode == Activity.RESULT_OK) {
+                    Intent i = new Intent(this, MyFirebaseMessagingService.class);
+                    startService(i); // OK, init GCM
+                }
+                break;
+
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -123,6 +151,8 @@ public class home extends AppCompatActivity {
         // You can also include some extra data.
         intent.putExtra("message", "");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+
     }
 
     @Override
@@ -133,4 +163,20 @@ public class home extends AppCompatActivity {
         intent.putExtra("message", "");
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
+
+    private void startRegistrationService() {
+        GoogleApiAvailability api = GoogleApiAvailability.getInstance();
+        int code = api.isGooglePlayServicesAvailable(this);
+        if (code == ConnectionResult.SUCCESS) {
+            onActivityResult(REQUEST_GOOGLE_PLAY_SERVICES, Activity.RESULT_OK, null);
+        } else if (api.isUserResolvableError(code) &&
+                api.showErrorDialogFragment(this, code, REQUEST_GOOGLE_PLAY_SERVICES)) {
+            // wait for onActivityResult call (see below)
+        } else {
+            Toast.makeText(this, api.getErrorString(code), Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 }
+

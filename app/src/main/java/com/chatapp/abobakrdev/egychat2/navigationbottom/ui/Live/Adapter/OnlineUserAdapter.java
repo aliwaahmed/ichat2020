@@ -82,6 +82,8 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<viewholder> implemen
                 intent.putExtra("mail", models.get(keys[position].toString()).getMail().toString());
                 intent.putExtra("name", models.get(keys[position].toString()).getName().toString());
                 intent.putExtra("img", models.get(keys[position].toString()).getImg().toString());
+                intent.putExtra("token",models.get(keys[position]).getToken());
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

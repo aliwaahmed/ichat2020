@@ -45,7 +45,7 @@ public class Completeinfo extends AppCompatActivity {
         _calendar=findViewById(R.id._calendar);
         date=findViewById(R.id.textView);
         c = Calendar.getInstance();
-         year = c.get(Calendar.YEAR);
+         year =1990;
          month = c.get(Calendar.MONTH);
          day  = c.get(Calendar.DAY_OF_MONTH);
 

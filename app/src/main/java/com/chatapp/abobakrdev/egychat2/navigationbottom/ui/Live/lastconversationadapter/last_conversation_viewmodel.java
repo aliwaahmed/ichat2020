@@ -58,7 +58,6 @@ public class last_conversation_viewmodel extends ViewModel {
           public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
               Log.e("lastconversation", dataSnapshot.getKey().toString());
               model = dataSnapshot.getValue(Message.class);
-
               models.add(model);
               mText.postValue(models);
           }

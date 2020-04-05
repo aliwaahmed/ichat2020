@@ -8,6 +8,24 @@ public class Message {
     private String send;
     private String img;
     private String name;
+    private String token;
+    private String mtoken;
+
+    public String getMtoken() {
+        return mtoken;
+    }
+
+    public void setMtoken(String mtoken) {
+        this.mtoken = mtoken;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getName() {
         return name;
