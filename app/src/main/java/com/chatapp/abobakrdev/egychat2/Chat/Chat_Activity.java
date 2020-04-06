@@ -177,14 +177,44 @@ public class Chat_Activity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        SharedPreferences.Editor sharedPreferenceseditor;
 
+        sharedPreferenceseditor = getApplicationContext().
+                getSharedPreferences("currentuser", Context.MODE_PRIVATE).edit();
 
+        sharedPreferenceseditor.putString("currentuser","empty");
+        sharedPreferenceseditor.apply();
+        sharedPreferenceseditor.commit();
 
+        super.onPause();
+    }
 
+    @Override
+    protected void onDestroy() {
+        SharedPreferences.Editor sharedPreferenceseditor;
 
+        sharedPreferenceseditor = getApplicationContext().
+                getSharedPreferences("currentuser", Context.MODE_PRIVATE).edit();
 
+        sharedPreferenceseditor.putString("currentuser","empty");
+        sharedPreferenceseditor.apply();
+        sharedPreferenceseditor.commit();
 
+        super.onDestroy();
+    }
 
+    @Override
+    public void onBackPressed() {
+        SharedPreferences.Editor sharedPreferenceseditor;
 
+        sharedPreferenceseditor = getApplicationContext().
+                getSharedPreferences("currentuser", Context.MODE_PRIVATE).edit();
 
+        sharedPreferenceseditor.putString("currentuser","empty");
+        sharedPreferenceseditor.apply();
+        sharedPreferenceseditor.commit();
+        super.onBackPressed();
+    }
 }
