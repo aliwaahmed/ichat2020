@@ -339,9 +339,12 @@ public class FirebaseOperation {
                 try {
 
                     JSONObject data = new JSONObject();
-                    data.put("message", "Sfsf");
+                    data.put("title", message.getName());
                     data.put("mail",sharedPreferences.getString("mail","-1"));
                     data.put("img",sharedPreferences.getString("img","-1"));
+                    data.put("token",sharedPreferences.getString("token","-1"));
+                    data.put("content", message.getTxt());
+
 
 
                     root.put("data", data);

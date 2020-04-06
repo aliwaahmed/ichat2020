@@ -20,6 +20,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
+import com.chatapp.abobakrdev.egychat2.Chat.Chat_Activity;
 import com.chatapp.abobakrdev.egychat2.navigationbottom.home;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.firebase.inappmessaging.display.FirebaseInAppMessagingDisplay;
@@ -37,24 +38,27 @@ import java.util.Map;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService
-{
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMessagingServ";
     private BroadcastReceiver mMessageReceiver;
     private String currentuser = "";
 
 
+    String mail;
+    String name;
+    String img;
+    String token;
 
     Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            sendNotification(bitmap);
+            sendNotification(bitmap, mail, name, img, token);
         }
 
         @Override
         public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-            Log.e("errorimg",e.getMessage().toString());
+            Log.e("errorimg", e.getMessage().toString());
 
 
         }
@@ -80,12 +84,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
                 new IntentFilter("custom-event-name"));
-       Log.e("messageali",remoteMessage.getData().toString());
+        Log.e("messageali", remoteMessage.getData().toString());
 //
-            getImage(remoteMessage);
+        getImage(remoteMessage);
     }
 
-    private void sendNotification(Bitmap bitmap){
+    private void sendNotification(Bitmap bitmap, String mail, String name, String img, String token) {
 
 
         NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
@@ -93,14 +97,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Intent intent = new Intent(getApplicationContext(), home.class);
+        Intent intent = new Intent(getApplicationContext(), Chat_Activity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent,0);
+        intent.putExtra("mail", mail);
+        intent.putExtra("name", name);
+        intent.putExtra("img", img);
+        intent.putExtra("token", token);
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "10as1";
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
 
             //Configure Notification Channel
@@ -119,7 +128,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                 .setSound(defaultSound)
                 .setContentText(Config.content)
                 .setContentIntent(pendingIntent)
-                .setStyle(style)
+                //  .setStyle(style)
                 .setLargeIcon(bitmap)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
@@ -130,18 +139,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 
     }
 
-    JSONObject jsonObject ;
+    JSONObject jsonObject;
 
     private void getImage(final RemoteMessage remoteMessage) {
 
         Map<String, String> data = remoteMessage.getData();
-        Config.title = data.get("title");
-        Config.content = data.get("content");
+
         try {
-             jsonObject =new JSONObject(data.get("data"));
+            jsonObject = new JSONObject(data.get("data"));
             Config.gameUrl = jsonObject.getString("img");
             Config.imageUrl = jsonObject.getString("img");
-
+            Config.title = jsonObject.getString("title");
+            Config.content = jsonObject.getString("content");
+            mail = jsonObject.getString("mail");
+            name = jsonObject.getString("title");
+            img = jsonObject.getString("img");
+            token = jsonObject.getString("token");
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -160,7 +173,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                         public void run() {
                             // Get image from data Notification
                             Picasso.get()
-                                    .load("https://www.gstatic.com/devrel-devsite/prod/v84899ba5ac366dd19b845bb4579ea9262ac5ac73d5db61a8fa440a5f2fc65a26/firebase/images/lockup.png")
+                                    .load(Config.imageUrl)
                                     .into(target);
                         }
                     });
