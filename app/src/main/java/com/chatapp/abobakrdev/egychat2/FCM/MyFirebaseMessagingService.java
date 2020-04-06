@@ -56,9 +56,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
                 sendNotification(bitmap, mail, name, img, token);
-            }
+
         }
 
         @Override
@@ -101,7 +100,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     private void sendNotification(Bitmap bitmap, String mail, String name, String img, String token) {
 
 
@@ -111,15 +109,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Intent intent = new Intent(getApplicationContext(), Chat_Activity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         intent.putExtra("mail", mail);
         intent.putExtra("name", name);
         intent.putExtra("img", img);
         intent.putExtra("token", token);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.
+                getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "10as1";
@@ -142,13 +140,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSound)
                 .setContentText(Config.content)
-                .setContentIntent(pendingIntent)
                 //  .setStyle(style)
                 .setLargeIcon(bitmap)
-                .setGroup(mail)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
 
+
+        notificationBuilder .setContentIntent(pendingIntent);
 
         notificationManager.notify(Integer.MAX_VALUE, notificationBuilder.build());
 
