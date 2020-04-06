@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.media.RingtoneManager;
@@ -42,7 +43,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMessagingServ";
     private BroadcastReceiver mMessageReceiver;
-    private String currentuser = "";
+    SharedPreferences sharedPreferences;
 
 
     String mail;
@@ -72,21 +73,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        mMessageReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Get extra data included in the Intent
+        sharedPreferences = getApplicationContext().getSharedPreferences("currentuser", Context.MODE_PRIVATE);
 
-                String message = intent.getStringExtra("message");
-                currentuser = message.toString().trim();
-                Log.e("broadcast", currentuser);
-            }
-        };
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-                new IntentFilter("custom-event-name"));
-        Log.e("messageali", remoteMessage.getData().toString());
+
+        Log.e("currentuser", sharedPreferences.getString("currentuser", "-1"));
+
+//        mMessageReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                // Get extra data included in the Intent
 //
+//                String message = intent.getStringExtra("message");
+//                currentuser = message.toString().trim();
+//                Log.e("broadcast", currentuser);
+//            }
+//        };
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+//                new IntentFilter("custom-event-name"));
+//        Log.e("messageali", remoteMessage.getData().toString());
+
+
         getImage(remoteMessage);
+
     }
 
     private void sendNotification(Bitmap bitmap, String mail, String name, String img, String token) {
@@ -147,6 +155,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         try {
             jsonObject = new JSONObject(data.get("data"));
+            Log.e("jsonali",jsonObject.toString());
             Config.gameUrl = jsonObject.getString("img");
             Config.imageUrl = jsonObject.getString("img");
             Config.title = jsonObject.getString("title");
@@ -155,12 +164,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             name = jsonObject.getString("title");
             img = jsonObject.getString("img");
             token = jsonObject.getString("token");
-
+            Log.e("currentmail", mail);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (!currentuser.equals(FirebaseOperation.getInstance(getApplicationContext()).
-                Remove_delemeter(mail))) {
+
+        if (!  FirebaseOperation.getInstance(getApplicationContext()).
+                Remove_delemeter(sharedPreferences.getString("currentuser", "-1").trim()).equals(FirebaseOperation.getInstance(getApplicationContext()).
+                Remove_delemeter(mail).trim())) {
             Log.e("imgali", Config.gameUrl);
 
             //Create thread to fetch image from notification

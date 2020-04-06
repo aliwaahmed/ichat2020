@@ -88,6 +88,14 @@ public class home extends AppCompatActivity {
 //                Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startService(intent1);
 
+        SharedPreferences.Editor sharedPreferenceseditor;
+
+        sharedPreferenceseditor = getApplicationContext().
+                getSharedPreferences("currentuser", Context.MODE_PRIVATE).edit();
+
+        sharedPreferenceseditor.putString("currentuser","empty");
+        sharedPreferenceseditor.apply();
+        sharedPreferenceseditor.commit();
 
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -145,6 +153,8 @@ public class home extends AppCompatActivity {
                 add_To_active_user(model);
 
 
+
+
     }
 
 
@@ -163,25 +173,8 @@ public class home extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Intent intent = new Intent("custom-event-name");
-        // You can also include some extra data.
-        intent.putExtra("message", "");
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
 
 
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Intent intent = new Intent("custom-event-name");
-        // You can also include some extra data.
-        intent.putExtra("message", "");
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
 
     private void startRegistrationService() {
         GoogleApiAvailability api = GoogleApiAvailability.getInstance();
