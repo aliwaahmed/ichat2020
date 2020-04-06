@@ -26,6 +26,7 @@ import com.chatapp.abobakrdev.egychat2.Chat.Chat_Activity;
 import com.chatapp.abobakrdev.egychat2.login.MainActivity;
 import com.chatapp.abobakrdev.egychat2.navigationbottom.home;
 import com.chatapp.abobakrdev.egychat2.R;
+import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Services.message_listenter;
 import com.google.firebase.inappmessaging.display.FirebaseInAppMessagingDisplay;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -37,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -56,7 +58,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                sendNotification(bitmap, mail, name, img, token);
+            sendNotification(bitmap, mail, name, img, token);
 
         }
 
@@ -76,6 +78,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+
         sharedPreferences = getApplicationContext().getSharedPreferences("currentuser", Context.MODE_PRIVATE);
 
 
@@ -97,6 +100,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
         getImage(remoteMessage);
+       // sendNotification(null," String mail"," String name", "String img"," String token");
 
     }
 
@@ -109,7 +113,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Intent intent = new Intent(getApplicationContext(), Chat_Activity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         intent.putExtra("mail", mail);
         intent.putExtra("name", name);
@@ -123,7 +127,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String NOTIFICATION_CHANNEL_ID = "10as1";
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
+           @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_MAX);
 
             //Configure Notification Channel
             notificationChannel.setDescription("Game Notifications");
@@ -140,15 +144,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setAutoCancel(true)
                 .setSound(defaultSound)
                 .setContentText(Config.content)
-                //  .setStyle(style)
+               //   .setStyle(style)
                 .setLargeIcon(bitmap)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
 
 
-        notificationBuilder .setContentIntent(pendingIntent);
+        notificationBuilder.setContentIntent(pendingIntent);
 
-        notificationManager.notify(Integer.MAX_VALUE, notificationBuilder.build());
+        notificationManager.notify(NotificationID.getID(), notificationBuilder.build());
 
 
     }
@@ -181,21 +185,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.e("imgali", Config.gameUrl);
 
             //Create thread to fetch image from notification
-            if (remoteMessage.getData() != null) {
 
                 Handler uiHandler = new Handler(Looper.getMainLooper());
                 uiHandler.post(new Runnable() {
                     @Override
                     public void run() {
                         // Get image from data Notification
-                        Picasso.get()
-                                .load(Config.imageUrl)
-                                .into(target);
+//                        Picasso.get()
+//                                .load(Config.imageUrl)
+//                                .into(target);
                     }
                 });
-            }
+            sendNotification(null, mail, name, img, token);
         }
+
+
     }
 
 
+}
+class NotificationID {
+    private final static AtomicInteger c = new AtomicInteger(0);
+
+    public static int getID() {
+        return c.incrementAndGet();
+    }
 }
