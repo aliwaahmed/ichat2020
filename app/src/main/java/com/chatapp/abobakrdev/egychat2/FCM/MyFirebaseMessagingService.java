@@ -159,28 +159,24 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        try {
-            if (!currentuser.equals(FirebaseOperation.getInstance(getApplicationContext()).
-                    Remove_delemeter(jsonObject.getString("mail")))) {
-                Log.e("imgali", Config.gameUrl);
+        if (!currentuser.equals(FirebaseOperation.getInstance(getApplicationContext()).
+                Remove_delemeter(mail))) {
+            Log.e("imgali", Config.gameUrl);
 
-                //Create thread to fetch image from notification
-                if (remoteMessage.getData() != null) {
+            //Create thread to fetch image from notification
+            if (remoteMessage.getData() != null) {
 
-                    Handler uiHandler = new Handler(Looper.getMainLooper());
-                    uiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Get image from data Notification
-                            Picasso.get()
-                                    .load(Config.imageUrl)
-                                    .into(target);
-                        }
-                    });
-                }
+                Handler uiHandler = new Handler(Looper.getMainLooper());
+                uiHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Get image from data Notification
+                        Picasso.get()
+                                .load(Config.imageUrl)
+                                .into(target);
+                    }
+                });
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 
