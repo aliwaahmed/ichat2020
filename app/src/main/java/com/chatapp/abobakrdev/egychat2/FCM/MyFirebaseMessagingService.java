@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.RemoteInput;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,6 +23,7 @@ import android.util.Log;
 
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
 import com.chatapp.abobakrdev.egychat2.Chat.Chat_Activity;
+import com.chatapp.abobakrdev.egychat2.login.MainActivity;
 import com.chatapp.abobakrdev.egychat2.navigationbottom.home;
 import com.chatapp.abobakrdev.egychat2.R;
 import com.google.firebase.inappmessaging.display.FirebaseInAppMessagingDisplay;
@@ -36,14 +38,15 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "MyFirebaseMessagingServ";
     private BroadcastReceiver mMessageReceiver;
     SharedPreferences sharedPreferences;
+
 
 
     String mail;
@@ -54,7 +57,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     Target target = new Target() {
         @Override
         public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            sendNotification(bitmap, mail, name, img, token);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                sendNotification(bitmap, mail, name, img, token);
+            }
         }
 
         @Override
@@ -97,7 +102,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT_WATCH)
     private void sendNotification(Bitmap bitmap, String mail, String name, String img, String token) {
+
+
+
+
 
 
         NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
@@ -138,6 +148,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent)
                 //  .setStyle(style)
                 .setLargeIcon(bitmap)
+                .setGroup(mail)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
 
