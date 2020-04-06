@@ -25,6 +25,7 @@ import com.chatapp.abobakrdev.egychat2.Chat.ChatAdapter.Adapter;
 import com.chatapp.abobakrdev.egychat2.Chat.mViewmodel.chatViewmodel;
 import com.chatapp.abobakrdev.egychat2.Chat.model.Message;
 import com.chatapp.abobakrdev.egychat2.AddNewUser.FirebaseOperation;
+
 import com.chatapp.abobakrdev.egychat2.R;
 import com.chatapp.abobakrdev.egychat2.navigationbottom.ui.Live.model.model;
 import com.google.android.material.snackbar.Snackbar;
@@ -91,6 +92,15 @@ public class Chat_Activity extends AppCompatActivity {
         FirebaseOperation.getInstance(getApplicationContext()).
                 add_To_active_user(model);
 
+
+
+
+
+
+
+
+
+//
         Log.e("mailto:", getIntent().getExtras().getString("mail", "-1"));
         send.setOnClickListener(new View.OnClickListener() {
             @Override
