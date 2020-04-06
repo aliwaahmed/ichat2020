@@ -48,7 +48,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     SharedPreferences sharedPreferences;
 
 
-
     String mail;
     String name;
     String img;
@@ -106,23 +105,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(Bitmap bitmap, String mail, String name, String img, String token) {
 
 
-
-
-
-
         NotificationCompat.BigPictureStyle style = new NotificationCompat.BigPictureStyle();
         style.bigPicture(bitmap);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         Intent intent = new Intent(getApplicationContext(), Chat_Activity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         intent.putExtra("mail", mail);
         intent.putExtra("name", name);
         intent.putExtra("img", img);
         intent.putExtra("token", token);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "10as1";
@@ -166,7 +163,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         try {
             jsonObject = new JSONObject(data.get("data"));
-            Log.e("jsonali",jsonObject.toString());
+            Log.e("jsonali", jsonObject.toString());
             Config.gameUrl = jsonObject.getString("img");
             Config.imageUrl = jsonObject.getString("img");
             Config.title = jsonObject.getString("title");
@@ -180,7 +177,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             e.printStackTrace();
         }
 
-        if (!  FirebaseOperation.getInstance(getApplicationContext()).
+        if (!FirebaseOperation.getInstance(getApplicationContext()).
                 Remove_delemeter(sharedPreferences.getString("currentuser", "-1").trim()).equals(FirebaseOperation.getInstance(getApplicationContext()).
                 Remove_delemeter(mail).trim())) {
             Log.e("imgali", Config.gameUrl);
